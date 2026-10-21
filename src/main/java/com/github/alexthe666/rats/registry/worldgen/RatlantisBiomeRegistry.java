@@ -12,11 +12,17 @@ import net.minecraft.data.worldgen.placement.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.attribute.AmbientSounds;
+import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class RatlantisBiomeRegistry {
@@ -35,24 +41,29 @@ public class RatlantisBiomeRegistry {
 
 	public static void bootstrap(BootstrapContext<Biome> context) {
 		HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
-		HolderGetter<ConfiguredWorldCarver<?>> carvers = context.lookup(Registries.CONFIGURED_CARVER);
+		HolderGetter<WorldCarver> carvers = context.lookup(Registries.CARVER);
 
 		context.register(RatlantisBiomeRegistry.RATLANTIS, new Biome.BiomeBuilder()
 				.hasPrecipitation(true)
 				.downfall(0.5F)
 				.temperature(0.55F)
+				// 26.3: the creature spawn probability is an environment attribute
+				.setAttribute(EnvironmentAttributes.CREATURE_WORLD_GEN_SPAWN_PROBABILITY, 0.4F)
+				// 26.1: sky/fog color and ambient mood are environment attributes (as in the shipped biome JSON)
+				.setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(0xFFC62A))
+				.setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(0xFFDA7F))
+				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, AmbientSounds.LEGACY_CAVE_SETTINGS)
 				.mobSpawnSettings(new MobSpawnSettings.Builder()
-						.creatureGenerationProbability(0.4F)
-						.addSpawn(MobCategory.MONSTER, 20, new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.FERAL_RATLANTEAN.get(), 1, 3))
-						.addSpawn(MobCategory.MONSTER, 50, new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.PIRAT.get(), 1, 2))
-						.addSpawn(MobCategory.MONSTER, 15, new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.RATLANTEAN_SPIRIT.get(), 1, 1))
-						.addSpawn(MobCategory.MONSTER, 5, new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.RATLANTEAN_RATBOT.get(), 1, 1))
-						.addSpawn(MobCategory.CREATURE, 40, new MobSpawnSettings.SpawnerData(EntityType.PARROT, 1, 2))
-						.addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(EntityType.PANDA, 1, 2))
-						.addSpawn(MobCategory.WATER_AMBIENT, 15, new MobSpawnSettings.SpawnerData(EntityType.PUFFERFISH, 1, 3))
-						.addSpawn(MobCategory.WATER_AMBIENT, 45, new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.RATFISH.get(), 8, 8))
-						.addSpawn(MobCategory.WATER_CREATURE, 2, new MobSpawnSettings.SpawnerData(EntityType.DOLPHIN, 1, 2))
-						.addSpawn(RatsMod.RATS, 10, new MobSpawnSettings.SpawnerData(RatsEntityRegistry.RAT.get(), 2, 4))
+						.addSpawn(RatlantisEntityRegistry.FERAL_RATLANTEAN.get(), MobCategory.MONSTER, 20, count(1, 3))
+						.addSpawn(RatlantisEntityRegistry.PIRAT.get(), MobCategory.MONSTER, 50, count(1, 2))
+						.addSpawn(RatlantisEntityRegistry.RATLANTEAN_SPIRIT.get(), MobCategory.MONSTER, 15, count(1, 1))
+						.addSpawn(RatlantisEntityRegistry.RATLANTEAN_RATBOT.get(), MobCategory.MONSTER, 5, count(1, 1))
+						.addSpawn(EntityTypes.PARROT, MobCategory.CREATURE, 40, count(1, 2))
+						.addSpawn(EntityTypes.PANDA, MobCategory.CREATURE, 14, count(1, 2))
+						.addSpawn(EntityTypes.PUFFERFISH, MobCategory.WATER_AMBIENT, 15, count(1, 3))
+						.addSpawn(RatlantisEntityRegistry.RATFISH.get(), MobCategory.WATER_AMBIENT, 45, count(8, 8))
+						.addSpawn(EntityTypes.DOLPHIN, MobCategory.WATER_CREATURE, 2, count(1, 2))
+						.addSpawn(RatsEntityRegistry.RAT.get(), RatsMod.RATS, 10, count(2, 4))
 						.build())
 				.generationSettings(new BiomeGenerationSettings.Builder(features, carvers)
 						.addCarver(RatlantisDimensionRegistry.RATLANTIS_CAVES)
@@ -96,13 +107,16 @@ public class RatlantisBiomeRegistry {
 						.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, MiscOverworldPlacements.FREEZE_TOP_LAYER)
 						.build())
 				.specialEffects(new BiomeSpecialEffects.Builder()
-						// 26.1: sky color and ambient mood moved to environment attributes (biome JSON `attributes`)
 						.foliageColorOverride(2546944)
 						.grassColorOverride(8177920)
 						.waterColor(4445678)
 						.build())
 				.build()
 		);
+	}
+
+	private static IntProvider count(int min, int max) {
+		return min == max ? ConstantInt.of(min) : UniformInt.of(min, max);
 	}
 
 	public static BiomeSource buildBiomeSource(HolderGetter<Biome> biomes) {

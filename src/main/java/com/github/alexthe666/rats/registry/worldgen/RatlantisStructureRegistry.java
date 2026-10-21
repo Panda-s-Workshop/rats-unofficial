@@ -15,6 +15,7 @@ import net.minecraft.data.worldgen.Pools;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -35,6 +36,7 @@ import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.AlwaysTrueTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.ProcessorRule;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RandomBlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 
 import java.util.List;
@@ -58,7 +60,7 @@ public class RatlantisStructureRegistry {
 		HolderGetter<StructureTemplatePool> pools = context.lookup(Registries.TEMPLATE_POOL);
 
 		context.register(BARON_RUNWAY, new JigsawStructure(new Structure.StructureSettings(biomes.getOrThrow(RatlantisBiomeTags.BARON_RUNWAY_SPAWNS), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN), pools.getOrThrow(BARON_RUNWAY_START), 1, ConstantHeight.of(VerticalAnchor.absolute(0)), false, Heightmap.Types.OCEAN_FLOOR_WG));
-		context.register(DUTCHRAT_SHIP, new JigsawStructure(new Structure.StructureSettings(biomes.getOrThrow(RatlantisBiomeTags.DUTCHRAT_SHIP_SPAWNS), Map.of(MobCategory.MONSTER, new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedList.<MobSpawnSettings.SpawnerData>builder().add(new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.GHOST_PIRAT.get(), 1, 1), 1).build())), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE), pools.getOrThrow(DUTCHRAT_SHIP_START), 1, ConstantHeight.of(VerticalAnchor.absolute(50)), false, Heightmap.Types.WORLD_SURFACE_WG));
+		context.register(DUTCHRAT_SHIP, new JigsawStructure(new Structure.StructureSettings(biomes.getOrThrow(RatlantisBiomeTags.DUTCHRAT_SHIP_SPAWNS), Map.of(MobCategory.MONSTER, new StructureSpawnOverride(StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedList.<MobSpawnSettings.SpawnerData>builder().add(new MobSpawnSettings.SpawnerData(RatlantisEntityRegistry.GHOST_PIRAT.get(), ConstantInt.of(1)), 1).build())), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE), pools.getOrThrow(DUTCHRAT_SHIP_START), 1, ConstantHeight.of(VerticalAnchor.absolute(50)), false, Heightmap.Types.WORLD_SURFACE_WG));
 	}
 
 	public static void bootstrapPools(BootstrapContext<StructureTemplatePool> context) {
@@ -75,7 +77,7 @@ public class RatlantisStructureRegistry {
 	}
 
 	public static void bootstrapProcessors(BootstrapContext<StructureProcessorList> context) {
-		context.register(RUIN_RUINS, new StructureProcessorList(List.of(
+		context.register(RUIN_RUINS, new StructureProcessorList(List.<StructureProcessor>of(
 				new CopyInputStateRuleProcessor(List.of(
 						new ProcessorRule(
 								new RandomBlockMatchTest(RatlantisBlockRegistry.MARBLED_CHEESE_BRICK.get(), 0.3F),
