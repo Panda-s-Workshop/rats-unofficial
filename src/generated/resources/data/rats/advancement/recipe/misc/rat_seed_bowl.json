@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:plastics"
+            "items": "#c:plastics"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:seeds"
+            "items": "#c:seeds"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_seed_bowl"
+        "recipes": "rats:rat_seed_bowl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

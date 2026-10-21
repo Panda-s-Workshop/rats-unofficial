@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/lapis"
+            "items": "#c:gems/lapis"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/flight_upgrade"
+        "recipes": "rats:upgrades/flight_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

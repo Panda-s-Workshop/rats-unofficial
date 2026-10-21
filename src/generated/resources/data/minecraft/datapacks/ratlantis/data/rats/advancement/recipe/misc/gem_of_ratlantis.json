@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/emerald"
+            "items": "#c:gems/emerald"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:gem_of_ratlantis"
+        "recipes": "rats:gem_of_ratlantis"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

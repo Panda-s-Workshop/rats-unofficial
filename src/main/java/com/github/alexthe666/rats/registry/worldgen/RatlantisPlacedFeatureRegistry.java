@@ -8,7 +8,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class RatlantisPlacedFeatureRegistry {
 	}
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
-		HolderGetter<ConfiguredFeature<?, ?>> features = context.lookup(Registries.CONFIGURED_FEATURE);
+		HolderGetter<Feature> features = context.lookup(Registries.FEATURE);
 		context.register(RATGLOVE_FLOWERS, new PlacedFeature(features.getOrThrow(RatlantisConfiguredFeatureRegistry.RATGLOVE_FLOWERS), List.of(RarityFilter.onAverageOnceEvery(20), CountPlacement.of(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
 		context.register(MARBLE_PILE, new PlacedFeature(features.getOrThrow(RatlantisConfiguredFeatureRegistry.MARBLE_PILE), List.of(RarityFilter.onAverageOnceEvery(25), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome())));
 		context.register(SMALL_RUINS, new PlacedFeature(features.getOrThrow(RatlantisConfiguredFeatureRegistry.SMALL_RUINS), List.of(RarityFilter.onAverageOnceEvery(20), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_OCEAN_FLOOR, BiomeFilter.biome())));

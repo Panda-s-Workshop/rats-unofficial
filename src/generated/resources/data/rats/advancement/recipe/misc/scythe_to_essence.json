@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:scythe_to_essence"
+        "recipes": "rats:scythe_to_essence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

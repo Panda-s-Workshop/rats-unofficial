@@ -28,7 +28,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gravels"
+            "items": "#c:gravels"
           }
         ]
       },
@@ -38,7 +38,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:sands"
+            "items": "#c:sands"
           }
         ]
       },
@@ -46,7 +46,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/underwater_upgrade"
+        "recipes": "rats:upgrades/underwater_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

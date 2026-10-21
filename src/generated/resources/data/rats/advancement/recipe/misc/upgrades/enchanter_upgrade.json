@@ -29,7 +29,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:bookshelves"
+            "items": "#c:bookshelves"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/enchanter_upgrade"
+        "recipes": "rats:upgrades/enchanter_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

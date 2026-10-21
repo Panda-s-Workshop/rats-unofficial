@@ -41,7 +41,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:seeds"
+            "items": "#c:seeds"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/breeder_upgrade"
+        "recipes": "rats:upgrades/breeder_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -69,7 +69,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:crops/wheat"
+            "items": "#c:crops/wheat"
           }
         ]
       },

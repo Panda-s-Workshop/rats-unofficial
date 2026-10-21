@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/emerald"
+            "items": "#c:storage_blocks/emerald"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/gold"
+            "items": "#c:ingots/gold"
           }
         ]
       },
@@ -59,7 +59,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/aristocrat_upgrade"
+        "recipes": "rats:upgrades/aristocrat_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/diamond"
+            "items": "#c:storage_blocks/diamond"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/diamond"
+            "items": "#c:gems/diamond"
           }
         ]
       },
@@ -71,7 +71,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/warrior_upgrade"
+        "recipes": "rats:upgrades/warrior_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

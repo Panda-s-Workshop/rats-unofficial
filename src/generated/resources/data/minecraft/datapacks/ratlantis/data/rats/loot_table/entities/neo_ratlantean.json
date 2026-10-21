@@ -9,7 +9,7 @@
           "name": "rats:psionic_rat_brain"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "rats:entities/neo_ratlantean"

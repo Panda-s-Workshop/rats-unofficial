@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/emerald"
+            "items": "#c:storage_blocks/emerald"
           }
         ]
       },
@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:glass_blocks"
+            "items": "#c:glass_blocks"
           }
         ]
       },
@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/iron"
+            "items": "#c:storage_blocks/iron"
           }
         ]
       },
@@ -44,7 +44,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/golem_mount_upgrade"
+        "recipes": "rats:upgrades/golem_mount_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

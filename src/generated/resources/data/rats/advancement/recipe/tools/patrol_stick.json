@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:rods/wooden"
+            "items": "#c:rods/wooden"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:patrol_stick"
+        "recipes": "rats:patrol_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

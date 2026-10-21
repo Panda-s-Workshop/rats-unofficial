@@ -3,8 +3,11 @@
   "biomes": "#rats:rat_spawn_biomes",
   "spawners": {
     "type": "rats:rat",
-    "maxCount": 3,
-    "minCount": 1,
-    "weight": 80
+    "weight": 80,
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 3
+    }
   }
 }

@@ -53,7 +53,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/ratlantis_gem"
+            "items": "#c:ingots/ratlantis_gem"
           }
         ]
       },
@@ -97,7 +97,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:idol_of_ratlantis"
+        "recipes": "rats:idol_of_ratlantis"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

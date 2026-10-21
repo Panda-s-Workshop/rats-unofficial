@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/coal"
+            "items": "#c:storage_blocks/coal"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/diamond"
+            "items": "#c:gems/diamond"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/iron"
+            "items": "#c:storage_blocks/iron"
           }
         ]
       },
@@ -45,7 +45,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/ore_doubling_upgrade"
+        "recipes": "rats:upgrades/ore_doubling_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

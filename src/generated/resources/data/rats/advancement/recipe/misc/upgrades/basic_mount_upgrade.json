@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/basic_mount_upgrade"
+        "recipes": "rats:upgrades/basic_mount_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

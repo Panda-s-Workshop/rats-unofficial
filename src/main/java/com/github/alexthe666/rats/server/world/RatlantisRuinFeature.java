@@ -1,7 +1,7 @@
 package com.github.alexthe666.rats.server.world;
 
 import com.github.alexthe666.rats.RatsMod;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
@@ -16,12 +16,12 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -29,6 +29,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.neoforged.neoforge.common.CommonHooks;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class RatlantisRuinFeature extends Feature<RatlantisRuinConfiguration> {
+// 26.3: features are records implementing Feature with their config inline (same JSON field names as before).
+public record RatlantisRuinFeature(RatlantisRuinConfiguration config) implements Feature {
+	public static final MapCodec<RatlantisRuinFeature> CODEC = RatlantisRuinConfiguration.CODEC.xmap(RatlantisRuinFeature::new, RatlantisRuinFeature::config);
 
 	// Loot tables to inject into otherwise-empty containers of specific ruins. Feature-placed
 	// templates don't run the jigsaw loot pass, so chests would generate empty without this.
@@ -44,19 +47,24 @@ public class RatlantisRuinFeature extends Feature<RatlantisRuinConfiguration> {
 			"plague_doctor_hut", ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(RatsMod.MODID, "chest/plague_doctor_hut"))
 	);
 
-	public RatlantisRuinFeature(Codec<RatlantisRuinConfiguration> codec) {
-		super(codec);
+	@Override
+	public MapCodec<RatlantisRuinFeature> codec() {
+		return CODEC;
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<RatlantisRuinConfiguration> context) {
+	public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+		return this.place(new RatsFeatureContext<>(level, chunkGenerator, random, origin, this.config));
+	}
+
+	public boolean place(RatsFeatureContext<RatlantisRuinConfiguration> context) {
 		RandomSource random = context.random();
 		WorldGenLevel level = context.level();
 		BlockPos blockpos = context.origin();
 		Rotation rotation = Rotation.getRandom(random);
 		RatlantisRuinConfiguration config = context.config();
 
-		StructureTemplateManager structuretemplatemanager = level.getLevel().getServer().getStructureManager();
+		StructureTemplateManager structuretemplatemanager = level.getLevel().getServer().getStructureTemplateManager();
 		StructureTemplate structuretemplate = null;
 		Identifier chosenRuin = null;
 
@@ -129,7 +137,7 @@ public class RatlantisRuinFeature extends Feature<RatlantisRuinConfiguration> {
 			List<StructureTemplate.StructureEntityInfo> rawList = (List<StructureTemplate.StructureEntityInfo>) field.get(template);
 			if (rawList == null || rawList.isEmpty()) return;
 
-			for (StructureTemplate.StructureEntityInfo entityInfo : StructureTemplate.processEntityInfos(template, level, origin, settings, rawList)) {
+			for (StructureTemplate.StructureEntityInfo entityInfo : CommonHooks.processStructureEntityInfos(template, level, origin, settings, rawList)) {
 				CompoundTag nbt = entityInfo.nbt.copy();
 				nbt.remove("UUID");
 				// 26.1: EntityType.by/Entity#load read from ValueInput now; wrap the template's CompoundTag.

@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:eggs"
+            "items": "#c:eggs"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:seeds"
+            "items": "#c:seeds"
           }
         ]
       },
@@ -35,7 +35,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/chicken_mount_upgrade"
+        "recipes": "rats:upgrades/chicken_mount_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

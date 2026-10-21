@@ -6,15 +6,15 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
+                "max": 1,
+                "min": 0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -22,22 +22,23 @@
                 "max": 1.0,
                 "min": 0.0
               },
-              "function": "minecraft:enchanted_count_increase","enchantment": "minecraft:looting"
+              "type": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting"
             }
           ],
           "name": "minecraft:iron_ingot"
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
+                "max": 1,
+                "min": 0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -45,22 +46,23 @@
                 "max": 1.0,
                 "min": 0.0
               },
-              "function": "minecraft:enchanted_count_increase","enchantment": "minecraft:looting"
+              "type": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting"
             }
           ],
           "name": "rats:oratchalcum_nugget"
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
+                "max": 1,
+                "min": 0
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -68,22 +70,23 @@
                 "max": 1.0,
                 "min": 0.0
               },
-              "function": "minecraft:enchanted_count_increase","enchantment": "minecraft:looting"
+              "type": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting"
             }
           ],
           "name": "rats:ratbot_barrel"
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
+                "max": 2,
+                "min": 1
               },
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count"
             },
             {
               "count": {
@@ -91,38 +94,42 @@
                 "max": 1.0,
                 "min": 0.0
               },
-              "function": "minecraft:enchanted_count_increase","enchantment": "minecraft:looting"
+              "type": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting"
             }
           ],
           "name": "minecraft:redstone"
         }
       ],
-      "rolls": 2.0
+      "rolls": 2
     },
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-              "condition": "minecraft:random_chance_with_enchanted_bonus",
-              "enchanted_chance": {
-                "type": "minecraft:linear",
-                "base": 0.05,
-                "per_level_above_first": 0.05
-              },
-              "enchantment": "minecraft:looting",
-              "unenchanted_chance": 0.05
-            }
-      ],
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:killed_by_player"
+          },
+          {
+            "type": "minecraft:random_chance_with_enchanted_bonus",
+            "enchanted_chance": {
+              "type": "minecraft:linear",
+              "base": 0.05,
+              "per_level_above_first": 0.05
+            },
+            "enchantment": "minecraft:looting",
+            "unenchanted_chance": 0.05
+          }
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
           "name": "rats:marbled_cheese_rat_head"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "rats:entities/ratlantean_ratbot"

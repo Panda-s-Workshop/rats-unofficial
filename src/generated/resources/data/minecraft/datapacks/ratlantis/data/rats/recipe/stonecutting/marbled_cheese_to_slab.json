@@ -1,8 +1,8 @@
 {
-  "count": 2,
   "ingredient": "rats:marbled_cheese",
   "result": {
-    "id": "rats:marbled_cheese_slab"
+    "id": "rats:marbled_cheese_slab",
+    "count": 2
   },
   "type": "minecraft:stonecutting"
 }

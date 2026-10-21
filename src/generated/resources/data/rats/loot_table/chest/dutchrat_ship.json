@@ -10,37 +10,43 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 8.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 8,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "minecraft:gold_nugget",
           "weight": 40
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 4.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "minecraft:gold_ingot",
           "weight": 20
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 3.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 3,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "minecraft:iron_ingot",
           "weight": 30
         },
@@ -56,37 +62,43 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 6.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 6,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "minecraft:gunpowder",
           "weight": 25
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 8.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 8,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "minecraft:cod",
           "weight": 50
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 4.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "minecraft:cooked_cod",
           "weight": 35
         },
@@ -102,25 +114,29 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 3.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 3,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "rats:cheese",
           "weight": 20
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 2.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 2,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "rats:rat_pelt",
           "weight": 15
         },
@@ -131,13 +147,15 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "add": false,
-              "count": { "type": "minecraft:uniform", "max": 4.0, "min": 1.0 },
-              "function": "minecraft:set_count"
-            }
-          ],
+          "modifier": {
+            "add": false,
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4,
+              "min": 1
+            },
+            "type": "minecraft:set_count"
+          },
           "name": "rats:raw_rat",
           "weight": 20
         },
@@ -149,8 +167,8 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 12.0,
-        "min": 4.0
+        "max": 12,
+        "min": 4
       }
     }
   ],

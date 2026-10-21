@@ -3,15 +3,13 @@
   "criteria": {
     "meet_doctor": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "rats:plague_doctor"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "rats:plague_doctor"
           }
-        ],
+        },
         "item": {}
       },
       "trigger": "minecraft:player_interacted_with_entity"
@@ -25,8 +23,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "id": "rats:plague_doctor_mask",
-      "nbt": "{Damage:0}"
+      "id": "rats:plague_doctor_mask"
     },
     "show_toast": true,
     "title": {

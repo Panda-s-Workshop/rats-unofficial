@@ -3,29 +3,25 @@
   "criteria": {
     "hurt_death": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "rats:black_death"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "rats:black_death"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_hurt_entity"
     },
     "killed_death": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "rats:black_death"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "rats:black_death"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
@@ -42,8 +38,7 @@
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "id": "rats:black_death_mask",
-      "nbt": "{Damage:0}"
+      "id": "rats:black_death_mask"
     },
     "show_toast": true,
     "title": {

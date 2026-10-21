@@ -29,7 +29,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/ratlantis_gem"
+            "items": "#c:ingots/ratlantis_gem"
           }
         ]
       },
@@ -39,7 +39,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:pirat_logs"
+            "items": "#rats:pirat_logs"
           }
         ]
       },
@@ -47,7 +47,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:dutchrat_bell"
+        "recipes": "rats:dutchrat_bell"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

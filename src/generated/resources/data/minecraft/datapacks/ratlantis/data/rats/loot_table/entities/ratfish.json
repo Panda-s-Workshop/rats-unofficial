@@ -9,7 +9,7 @@
           "name": "rats:ratfish"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "rats:entities/ratfish"

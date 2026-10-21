@@ -9,7 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
@@ -46,7 +46,7 @@ public class ThickBranchingTrunkPlacer extends TrunkPlacer {
 	}
 
 	@Override
-	public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> consumer, RandomSource random, int treeHeight, BlockPos pos, TreeConfiguration config) {
+	public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> consumer, RandomSource random, int treeHeight, BlockPos pos, TreeFeature config) {
 		List<FoliagePlacer.FoliageAttachment> attachments = new ArrayList<>();
 		//normal tree:
 		// trunk is 1x1, base is 3x3
@@ -63,9 +63,9 @@ public class ThickBranchingTrunkPlacer extends TrunkPlacer {
 			for (int baseZ = -this.baseRadius; baseZ <= this.baseRadius; baseZ++) {
 				if (baseX * baseX + baseZ * baseZ <= this.baseRadius * this.baseRadius) {
 					BlockPos basePos = pos.offset(baseX, 0, baseZ);
-					consumer.accept(basePos, config.trunkProvider.getState(level, random, basePos));
+					consumer.accept(basePos, config.trunkProvider().value().getState(level, random, basePos));
 					for (int baseHeight = 0; baseHeight <= random.nextInt(this.baseRadius + 1); baseHeight++) {
-						consumer.accept(basePos.above(baseHeight), config.trunkProvider.getState(level, random, basePos.above(baseHeight)));
+						consumer.accept(basePos.above(baseHeight), config.trunkProvider().value().getState(level, random, basePos.above(baseHeight)));
 					}
 					// 26.1: dirtProvider/Feature.isDirt are gone; vanilla's placeBelowTrunkBlock covers the same job via belowTrunkProvider.
 					placeBelowTrunkBlock(level, consumer, random, basePos.below(), config);
@@ -91,7 +91,7 @@ public class ThickBranchingTrunkPlacer extends TrunkPlacer {
 		return attachments;
 	}
 
-	private List<FoliagePlacer.FoliageAttachment> generateRecursiveBranch(WorldGenLevel level, BiConsumer<BlockPos, BlockState> consumer, RandomSource random, BlockPos pos, TreeConfiguration config, Direction genDir, int initialBranchHeight, BlockPos.MutableBlockPos mutablePos, int branchDepth, List<FoliagePlacer.FoliageAttachment> attachments) {
+	private List<FoliagePlacer.FoliageAttachment> generateRecursiveBranch(WorldGenLevel level, BiConsumer<BlockPos, BlockState> consumer, RandomSource random, BlockPos pos, TreeFeature config, Direction genDir, int initialBranchHeight, BlockPos.MutableBlockPos mutablePos, int branchDepth, List<FoliagePlacer.FoliageAttachment> attachments) {
 		Function<BlockState, BlockState> function = state -> state.trySetValue(RotatedPillarBlock.AXIS, genDir.getAxis());
 		mutablePos.set(pos).move(Direction.UP, initialBranchHeight);
 		int branchLength = random.nextInt(2) + 3;

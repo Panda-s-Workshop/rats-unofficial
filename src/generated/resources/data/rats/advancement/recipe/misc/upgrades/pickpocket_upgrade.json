@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/emerald"
+            "items": "#c:gems/emerald"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/emerald"
+            "items": "#c:storage_blocks/emerald"
           }
         ]
       },
@@ -47,7 +47,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/pickpocket_upgrade"
+        "recipes": "rats:upgrades/pickpocket_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

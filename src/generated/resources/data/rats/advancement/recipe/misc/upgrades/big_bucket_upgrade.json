@@ -16,7 +16,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/diamond"
+            "items": "#c:gems/diamond"
           }
         ]
       },
@@ -26,7 +26,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:slime_balls"
+            "items": "#c:slime_balls"
           }
         ]
       },
@@ -34,7 +34,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/big_bucket_upgrade"
+        "recipes": "rats:upgrades/big_bucket_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

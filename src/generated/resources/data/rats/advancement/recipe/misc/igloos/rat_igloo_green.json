@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/green"
+            "items": "#c:dyes/green"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:igloos"
+            "items": "#rats:igloos"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:igloos/rat_igloo_green"
+        "recipes": "rats:igloos/rat_igloo_green"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

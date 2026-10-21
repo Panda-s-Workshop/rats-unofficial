@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes"
+            "items": "#c:dyes"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:dye_sponge"
+        "recipes": "rats:dye_sponge"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

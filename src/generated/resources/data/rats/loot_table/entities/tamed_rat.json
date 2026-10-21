@@ -9,7 +9,7 @@
           "value": "rats:entities/rat"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "rats:entities/tamed_rat"

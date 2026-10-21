@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/blue_cheese"
+            "items": "#c:storage_blocks/blue_cheese"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/diamond"
+            "items": "#c:gems/diamond"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:crafting_tables"
+            "items": "#c:crafting_tables"
           }
         ]
       },
@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_quarry"
+        "recipes": "rats:rat_quarry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

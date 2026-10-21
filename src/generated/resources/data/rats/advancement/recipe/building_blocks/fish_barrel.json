@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:fishes"
+            "items": "#minecraft:fishes"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:fish_barrel"
+        "recipes": "rats:fish_barrel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -8,12 +8,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 
 // 26.1: TrimMaterial is just (MaterialAssetGroup, description) — the ingredient item link and
 // item-model index moved to data (trim materials are referenced from items via components and
 // the trim ingredient item tags).
+// 26.3: the asset group became a palette id; the palette texture is assets/<ns>/textures/palettes/<path>.png.
 public class RatlantisTrimRegistry {
 
 	public static final ResourceKey<TrimMaterial> GEM_OF_RATLANTIS = registerKey("gem_of_ratlantis");
@@ -30,6 +30,6 @@ public class RatlantisTrimRegistry {
 
 	private static void register(BootstrapContext<TrimMaterial> context, ResourceKey<TrimMaterial> trimKey, Style color) {
 		Component description = Component.translatable(Util.makeDescriptionId("trim_material", trimKey.identifier())).withStyle(color);
-		context.register(trimKey, new TrimMaterial(MaterialAssetGroup.create(trimKey.identifier().getPath()), description));
+		context.register(trimKey, new TrimMaterial(trimKey.identifier().withPrefix("trim/"), description));
 	}
 }

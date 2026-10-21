@@ -29,7 +29,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/cheese"
+            "items": "#c:storage_blocks/cheese"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/damage_protection_upgrade"
+        "recipes": "rats:upgrades/damage_protection_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

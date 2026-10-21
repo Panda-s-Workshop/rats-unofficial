@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:ratlantis_shovel"
+        "recipes": "rats:ratlantis_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

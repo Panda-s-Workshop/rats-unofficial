@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/diamond"
+            "items": "#c:storage_blocks/diamond"
           }
         ]
       },
@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/gold"
+            "items": "#c:storage_blocks/gold"
           }
         ]
       },
@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/iron"
+            "items": "#c:storage_blocks/iron"
           }
         ]
       },
@@ -34,7 +34,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/redstone"
+            "items": "#c:storage_blocks/redstone"
           }
         ]
       },
@@ -44,7 +44,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:slime_balls"
+            "items": "#c:slime_balls"
           }
         ]
       },
@@ -54,7 +54,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:strings"
+            "items": "#c:strings"
           }
         ]
       },
@@ -62,7 +62,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/jury_rigged_upgrade"
+        "recipes": "rats:upgrades/jury_rigged_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

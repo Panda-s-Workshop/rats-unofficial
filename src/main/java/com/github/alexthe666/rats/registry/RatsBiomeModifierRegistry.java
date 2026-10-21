@@ -7,6 +7,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
@@ -21,16 +23,16 @@ public class RatsBiomeModifierRegistry {
 		context.register(ADD_RAT_SPAWNS,
 				BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(RatsBiomeTags.RAT_SPAWN_BIOMES),
-						new Weighted<>(new MobSpawnSettings.SpawnerData(RatsEntityRegistry.RAT.get(), 1, 3), 80)));
+						new Weighted<>(new MobSpawnSettings.SpawnerData(RatsEntityRegistry.RAT.get(), UniformInt.of(1, 3)), 80)));
 
 		context.register(ADD_PIPER_SPAWNS,
 				BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(RatsBiomeTags.PIPER_SPAWN_BIOMES),
-						new Weighted<>(new MobSpawnSettings.SpawnerData(RatsEntityRegistry.PIED_PIPER.get(), 1, 1), 25)));
+						new Weighted<>(new MobSpawnSettings.SpawnerData(RatsEntityRegistry.PIED_PIPER.get(), ConstantInt.of(1)), 25)));
 
 		context.register(ADD_DEMON_RAT_SPAWNS,
 				BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(RatsBiomeTags.DEMON_RAT_SPAWN_BIOMES),
-						new Weighted<>(new MobSpawnSettings.SpawnerData(RatsEntityRegistry.DEMON_RAT.get(), 1, 1), 15)));
+						new Weighted<>(new MobSpawnSettings.SpawnerData(RatsEntityRegistry.DEMON_RAT.get(), ConstantInt.of(1)), 15)));
 	}
 }

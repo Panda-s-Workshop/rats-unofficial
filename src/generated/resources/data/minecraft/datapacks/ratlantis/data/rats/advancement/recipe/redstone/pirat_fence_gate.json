@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:pirat_fence_gate"
+        "recipes": "rats:pirat_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

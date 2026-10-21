@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/red"
+            "items": "#c:dyes/red"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:top_hat"
+        "recipes": "rats:top_hat"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

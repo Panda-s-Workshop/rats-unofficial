@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/light_blue"
+            "items": "#c:dyes/light_blue"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:hammocks"
+            "items": "#rats:hammocks"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:hammocks/hammock_dyed_light_blue"
+        "recipes": "rats:hammocks/hammock_dyed_light_blue"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

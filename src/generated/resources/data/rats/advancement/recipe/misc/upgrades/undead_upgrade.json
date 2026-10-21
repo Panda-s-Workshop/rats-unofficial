@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:bones"
+            "items": "#c:bones"
           }
         ]
       },
@@ -37,7 +37,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/undead_upgrade"
+        "recipes": "rats:upgrades/undead_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

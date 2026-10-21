@@ -41,7 +41,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:saplings"
+            "items": "#minecraft:saplings"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/lumberjack_upgrade"
+        "recipes": "rats:upgrades/lumberjack_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
