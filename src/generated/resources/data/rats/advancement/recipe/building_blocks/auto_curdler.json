@@ -16,7 +16,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/cheese"
+            "items": "#c:storage_blocks/cheese"
           }
         ]
       },
@@ -26,7 +26,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:glass_blocks/colorless"
+            "items": "#c:glass_blocks/colorless"
           }
         ]
       },
@@ -46,7 +46,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:auto_curdler"
+        "recipes": "rats:auto_curdler"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

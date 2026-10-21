@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:pirat_logs"
+            "items": "#rats:pirat_logs"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:pirat_planks_from_log"
+        "recipes": "rats:pirat_planks_from_log"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/red"
+            "items": "#c:dyes/red"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:tubes/rat_tube_red"
+        "recipes": "rats:tubes/rat_tube_red"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:tubes"
+            "items": "#rats:tubes"
           }
         ]
       },

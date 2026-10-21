@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/purple"
+            "items": "#c:dyes/purple"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:hammocks"
+            "items": "#rats:hammocks"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:hammocks/hammock_dyed_purple"
+        "recipes": "rats:hammocks/hammock_dyed_purple"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

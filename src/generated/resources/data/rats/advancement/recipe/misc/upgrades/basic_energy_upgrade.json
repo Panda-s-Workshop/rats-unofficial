@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/gold"
+            "items": "#c:ingots/gold"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dusts/redstone"
+            "items": "#c:dusts/redstone"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/basic_energy_upgrade"
+        "recipes": "rats:upgrades/basic_energy_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

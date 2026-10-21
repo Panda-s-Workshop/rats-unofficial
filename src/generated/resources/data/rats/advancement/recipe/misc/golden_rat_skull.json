@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/gold"
+            "items": "#c:ingots/gold"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:golden_rat_skull"
+        "recipes": "rats:golden_rat_skull"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

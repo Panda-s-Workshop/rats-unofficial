@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:terracotta"
+            "items": "#minecraft:terracotta"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:nuggets/iron"
+            "items": "#c:nuggets/iron"
           }
         ]
       },
@@ -35,7 +35,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_flute"
+        "recipes": "rats:rat_flute"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:farmer_hat"
+        "recipes": "rats:farmer_hat"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -23,7 +23,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:crops/wheat"
+            "items": "#c:crops/wheat"
           }
         ]
       },

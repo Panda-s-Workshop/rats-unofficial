@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/gold"
+            "items": "#c:storage_blocks/gold"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/raw_gold"
+            "items": "#c:storage_blocks/raw_gold"
           }
         ]
       },
@@ -47,7 +47,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/idol_upgrade"
+        "recipes": "rats:upgrades/idol_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

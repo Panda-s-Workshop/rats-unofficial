@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:fishes"
+            "items": "#minecraft:fishes"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/fisherman_upgrade"
+        "recipes": "rats:upgrades/fisherman_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

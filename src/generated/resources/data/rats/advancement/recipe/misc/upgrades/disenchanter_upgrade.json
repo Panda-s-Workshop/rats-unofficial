@@ -28,7 +28,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:stones"
+            "items": "#c:stones"
           }
         ]
       },
@@ -48,7 +48,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/disenchanter_upgrade"
+        "recipes": "rats:upgrades/disenchanter_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

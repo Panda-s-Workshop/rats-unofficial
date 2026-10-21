@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:pirat_slab"
+        "recipes": "rats:pirat_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

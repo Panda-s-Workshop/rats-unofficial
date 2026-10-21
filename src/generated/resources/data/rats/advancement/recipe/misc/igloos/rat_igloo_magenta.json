@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/magenta"
+            "items": "#c:dyes/magenta"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:igloos"
+            "items": "#rats:igloos"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:igloos/rat_igloo_magenta"
+        "recipes": "rats:igloos/rat_igloo_magenta"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

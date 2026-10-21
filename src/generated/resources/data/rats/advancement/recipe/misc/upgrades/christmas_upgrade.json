@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:coals"
+            "items": "#minecraft:coals"
           }
         ]
       },
@@ -37,7 +37,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/christmas_upgrade"
+        "recipes": "rats:upgrades/christmas_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

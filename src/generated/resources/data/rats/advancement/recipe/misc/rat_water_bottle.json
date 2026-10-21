@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:nuggets/iron"
+            "items": "#c:nuggets/iron"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:plastics"
+            "items": "#c:plastics"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_water_bottle"
+        "recipes": "rats:rat_water_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

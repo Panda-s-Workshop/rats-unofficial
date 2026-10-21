@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:strings"
+            "items": "#c:strings"
           }
         ]
       },
@@ -22,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:hammocks/rat_hammock_light_blue"
+        "recipes": "rats:hammocks/rat_hammock_light_blue"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

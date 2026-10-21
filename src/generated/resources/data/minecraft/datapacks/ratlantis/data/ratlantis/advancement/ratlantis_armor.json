@@ -58,8 +58,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "id": "rats:ratlantis_helmet",
-      "nbt": "{Damage:0}"
+      "id": "rats:ratlantis_helmet"
     },
     "show_toast": true,
     "title": {

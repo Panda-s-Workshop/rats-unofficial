@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:leathers"
+            "items": "#c:leathers"
           }
         ]
       },
@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:rods/blaze"
+            "items": "#c:rods/blaze"
           }
         ]
       },
@@ -22,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:dragon_wing"
+        "recipes": "rats:dragon_wing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

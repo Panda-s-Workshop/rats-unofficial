@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dusts/redstone"
+            "items": "#c:dusts/redstone"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/redstone"
+            "items": "#c:storage_blocks/redstone"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/speed_upgrade"
+        "recipes": "rats:upgrades/speed_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

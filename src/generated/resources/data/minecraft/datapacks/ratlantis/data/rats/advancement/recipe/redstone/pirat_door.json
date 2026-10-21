@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:pirat_door"
+        "recipes": "rats:pirat_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

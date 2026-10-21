@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:rods/blaze"
+            "items": "#c:rods/blaze"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/quartz"
+            "items": "#c:gems/quartz"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/elite_energy_upgrade"
+        "recipes": "rats:upgrades/elite_energy_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

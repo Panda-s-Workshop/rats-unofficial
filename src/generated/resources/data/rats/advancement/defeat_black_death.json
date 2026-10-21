@@ -3,15 +3,13 @@
   "criteria": {
     "killed_death": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "rats:black_death"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "rats:black_death"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     }
@@ -24,8 +22,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "id": "rats:plague_scythe",
-      "nbt": "{Damage:0}"
+      "id": "rats:plague_scythe"
     },
     "show_toast": true,
     "title": {

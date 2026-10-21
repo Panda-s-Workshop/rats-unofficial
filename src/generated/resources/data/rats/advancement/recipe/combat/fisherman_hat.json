@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:fishes"
+            "items": "#minecraft:fishes"
           }
         ]
       },
@@ -26,7 +26,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:strings"
+            "items": "#c:strings"
           }
         ]
       },
@@ -34,7 +34,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:fisherman_hat"
+        "recipes": "rats:fisherman_hat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

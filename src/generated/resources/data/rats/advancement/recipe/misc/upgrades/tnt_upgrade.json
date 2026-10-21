@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gunpowders"
+            "items": "#c:gunpowders"
           }
         ]
       },
@@ -12,7 +12,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/tnt_upgrade"
+        "recipes": "rats:upgrades/tnt_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

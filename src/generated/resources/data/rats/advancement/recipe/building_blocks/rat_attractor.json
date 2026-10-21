@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/cheese"
+            "items": "#c:storage_blocks/cheese"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dusts/redstone"
+            "items": "#c:dusts/redstone"
           }
         ]
       },
@@ -35,7 +35,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_attractor"
+        "recipes": "rats:rat_attractor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

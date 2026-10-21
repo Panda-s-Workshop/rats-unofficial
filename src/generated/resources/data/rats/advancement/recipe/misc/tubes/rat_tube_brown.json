@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/brown"
+            "items": "#c:dyes/brown"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:tubes/rat_tube_brown"
+        "recipes": "rats:tubes/rat_tube_brown"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "rats:tubes"
+            "items": "#rats:tubes"
           }
         ]
       },

@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cobblestones/mossy"
+            "items": "#c:cobblestones/mossy"
           }
         ]
       },
@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:dyes/pink"
+            "items": "#c:dyes/pink"
           }
         ]
       },
@@ -22,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/placer_upgrade"
+        "recipes": "rats:upgrades/placer_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

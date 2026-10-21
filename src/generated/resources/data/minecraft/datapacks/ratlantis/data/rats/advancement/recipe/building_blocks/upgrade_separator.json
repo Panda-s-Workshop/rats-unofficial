@@ -51,7 +51,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrade_separator"
+        "recipes": "rats:upgrade_separator"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

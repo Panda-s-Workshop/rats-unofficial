@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/quartz"
+            "items": "#c:gems/quartz"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:marbled_cheese_raw"
+        "recipes": "rats:marbled_cheese_raw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

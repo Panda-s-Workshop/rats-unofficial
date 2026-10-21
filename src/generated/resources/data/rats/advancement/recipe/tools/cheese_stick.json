@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:rods/wooden"
+            "items": "#c:rods/wooden"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:cheese_stick"
+        "recipes": "rats:cheese_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

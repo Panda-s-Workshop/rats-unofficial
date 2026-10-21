@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:arrows"
+            "items": "#minecraft:arrows"
           }
         ]
       },
@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/iron"
+            "items": "#c:ingots/iron"
           }
         ]
       },
@@ -35,7 +35,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/crossbow_upgrade"
+        "recipes": "rats:upgrades/crossbow_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

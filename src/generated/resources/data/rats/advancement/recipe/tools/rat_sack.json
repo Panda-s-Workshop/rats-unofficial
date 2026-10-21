@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:leathers"
+            "items": "#c:leathers"
           }
         ]
       },
@@ -22,7 +22,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_sack"
+        "recipes": "rats:rat_sack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

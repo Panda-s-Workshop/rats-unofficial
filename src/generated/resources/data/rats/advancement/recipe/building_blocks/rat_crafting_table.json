@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/cheese"
+            "items": "#c:storage_blocks/cheese"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:rat_crafting_table"
+        "recipes": "rats:rat_crafting_table"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

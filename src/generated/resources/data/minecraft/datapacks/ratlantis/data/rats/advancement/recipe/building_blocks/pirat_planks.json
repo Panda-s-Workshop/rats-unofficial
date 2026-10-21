@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:pirat_planks"
+        "recipes": "rats:pirat_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

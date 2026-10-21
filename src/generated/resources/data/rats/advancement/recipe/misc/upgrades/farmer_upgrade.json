@@ -41,7 +41,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:seeds"
+            "items": "#c:seeds"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/farmer_upgrade"
+        "recipes": "rats:upgrades/farmer_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

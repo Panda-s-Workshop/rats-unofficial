@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:gems/diamond"
+            "items": "#c:gems/diamond"
           }
         ]
       },
@@ -49,7 +49,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:purifying_liquid"
+        "recipes": "rats:purifying_liquid"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -17,7 +17,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:cheese"
+            "items": "#c:cheese"
           }
         ]
       },
@@ -39,7 +39,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:planks"
+            "items": "#minecraft:planks"
           }
         ]
       },
@@ -59,7 +59,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/crafting_upgrade"
+        "recipes": "rats:upgrades/crafting_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

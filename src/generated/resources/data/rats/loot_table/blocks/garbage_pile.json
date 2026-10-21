@@ -9,13 +9,13 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "enchantments": [
+              "condition": {
+                "type": "minecraft:match_tool",
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
                       {
-                        "enchantment": "minecraft:silk_touch",
+                        "enchantments": "minecraft:silk_touch",
                         "levels": {
                           "min": 1
                         }
@@ -23,7 +23,7 @@
                     ]
                   }
                 }
-              ],
+              },
               "name": "rats:garbage_pile"
             },
             {
@@ -31,25 +31,21 @@
               "children": [
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "chances": [
-                        0.1,
-                        0.14285715,
-                        0.25,
-                        1.0
-                      ],
-                      "condition": "minecraft:table_bonus",
-                      "enchantment": "minecraft:fortune"
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "add": false,
-                      "count": 1.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  "condition": {
+                    "chances": [
+                      0.1,
+                      0.14285715,
+                      0.25,
+                      1.0
+                    ],
+                    "type": "minecraft:table_bonus",
+                    "enchantment": "minecraft:fortune"
+                  },
+                  "modifier": {
+                    "add": false,
+                    "count": 1,
+                    "type": "minecraft:set_count"
+                  },
                   "name": "rats:plastic_waste"
                 },
                 {
@@ -57,16 +53,14 @@
                   "name": "rats:garbage_pile"
                 }
               ],
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ]
+              "condition": {
+                "type": "minecraft:survives_explosion"
+              }
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "rats:blocks/garbage_pile"

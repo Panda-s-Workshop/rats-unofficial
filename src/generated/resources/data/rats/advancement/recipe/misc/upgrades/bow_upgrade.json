@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:arrows"
+            "items": "#minecraft:arrows"
           }
         ]
       },
@@ -25,7 +25,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/bow_upgrade"
+        "recipes": "rats:upgrades/bow_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

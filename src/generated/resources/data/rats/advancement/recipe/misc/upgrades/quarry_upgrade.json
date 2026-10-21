@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:storage_blocks/blue_cheese"
+            "items": "#c:storage_blocks/blue_cheese"
           }
         ]
       },
@@ -37,7 +37,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rats:upgrades/quarry_upgrade"
+        "recipes": "rats:upgrades/quarry_upgrade"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
