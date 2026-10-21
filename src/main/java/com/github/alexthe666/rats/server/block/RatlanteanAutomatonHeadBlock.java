@@ -12,7 +12,7 @@ import com.github.alexthe666.rats.server.entity.monster.boss.RatlanteanAutomaton
 import com.github.alexthe666.rats.server.misc.RatsLangConstants;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -48,13 +48,6 @@ import java.util.function.Predicate;
 
 @SuppressWarnings("deprecation")
 public class RatlanteanAutomatonHeadBlock extends BaseEntityBlock implements WearableOnHead, CustomItemRarity {
-	public static final com.mojang.serialization.MapCodec<RatlanteanAutomatonHeadBlock> CODEC = simpleCodec(RatlanteanAutomatonHeadBlock::new);
-
-	@Override
-	protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
-	}
-
 
 	// 26.1: DirectionProperty was removed; HORIZONTAL_FACING is now an EnumProperty<Direction>.
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;

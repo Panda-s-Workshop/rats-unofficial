@@ -29,13 +29,6 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("deprecation")
 public class RatQuarryBlock extends BaseEntityBlock {
-	public static final com.mojang.serialization.MapCodec<RatQuarryBlock> CODEC = simpleCodec(RatQuarryBlock::new);
-
-	@Override
-	protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
-	}
-
 
 	public RatQuarryBlock(BlockBehaviour.Properties properties) {
 		super(properties);

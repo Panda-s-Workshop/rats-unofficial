@@ -132,7 +132,7 @@ public class RatCraftingTableMenu extends AbstractContainerMenu {
 			slot.onTake(player, itemstack1);
 
 			if (slotIndex == 0) {
-				player.drop(itemstack1, false);
+				player.drop(itemstack1, false, net.minecraft.util.Prediction.PREDICTED);
 			}
 		}
 

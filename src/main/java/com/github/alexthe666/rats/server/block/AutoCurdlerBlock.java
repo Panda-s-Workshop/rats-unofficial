@@ -33,14 +33,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,13 +46,6 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("deprecation")
 public class AutoCurdlerBlock extends BaseEntityBlock {
-	public static final com.mojang.serialization.MapCodec<AutoCurdlerBlock> CODEC = simpleCodec(AutoCurdlerBlock::new);
-
-	@Override
-	protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
-	}
-
 
 	// 26.1: DirectionProperty was removed; use EnumProperty<Direction>.
 	public static final EnumProperty<Direction> FACING = EnumProperty.create("facing", Direction.class, Direction.Plane.HORIZONTAL);
@@ -91,36 +82,22 @@ public class AutoCurdlerBlock extends BaseEntityBlock {
 			return InteractionResult.TRY_WITH_EMPTY_HAND;
 		}
 		if (AutoCurdlerBlockEntity.isMilk(stack) && level.getBlockEntity(pos) instanceof AutoCurdlerBlockEntity te) {
-			// 1.21: FluidUtil.getFluidHandler returns Optional<IFluidHandlerItem> directly (no LazyOptional/.resolve()).
-			IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack).orElse(null);
+			// 26.3: IFluidHandlerItem is gone. The item's fluid handler is reached through an ItemAccess for the
+			// player's hand, which swaps the container (milk bucket -> bucket) into the inventory and leaves the
+			// held item alone in creative, as the old drain/getContainer code did by hand. NeoForge's milk fluid is
+			// enabled by Rats, so milk buckets have a fluid handler.
+			ResourceHandler<FluidResource> fluidHandler = ItemAccess.forPlayerInteraction(player, hand).getCapability(Capabilities.Fluid.ITEM);
 			if (!level.isClientSide() && fluidHandler != null) {
-				FluidStack fluidStack = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
-				// 26.1: milk buckets expose no fluid handler contents; fabricate the milk stack like RatMilkCowGoal does.
-				if (fluidStack.isEmpty() && stack.is(Items.MILK_BUCKET)) {
-					fluidStack = new FluidStack(NeoForgeMod.MILK.get(), FluidType.BUCKET_VOLUME);
-				}
-				FluidStack drain = fluidHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-				if (drain.getAmount() > 0 || stack.is(Items.MILK_BUCKET)) {
-					int amount;
-					try (Transaction tx = Transaction.openRoot()) {
-						amount = te.getTank().insert(FluidResource.of(fluidStack), fluidStack.getAmount(), tx);
+				int amount;
+				try (Transaction tx = Transaction.openRoot()) {
+					amount = ResourceHandlerUtil.move(fluidHandler, te.getTank(), resource -> true, Integer.MAX_VALUE, tx);
+					if (amount > 0) {
 						tx.commit();
 					}
-					if (amount != 0) {
-						level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-						if (!player.isCreative()) {
-							fluidHandler.drain(amount, IFluidHandler.FluidAction.EXECUTE);
-							ItemStack container = fluidHandler.getContainer();
-							if (stack != container) {
-								stack.shrink(1);
-								player.getInventory().add(container);
-							} else if (stack.is(Items.MILK_BUCKET)) {
-								stack.shrink(1);
-								player.getInventory().add(new ItemStack(Items.BUCKET));
-							}
-						}
-						PacketDistributor.sendToAllPlayers(new UpdateCurdlerFluidPacket(pos.asLong(), te.getTankFluid()));
-					}
+				}
+				if (amount != 0) {
+					level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+					PacketDistributor.sendToAllPlayers(new UpdateCurdlerFluidPacket(pos.asLong(), te.getTankFluid()));
 				}
 			}
 			return InteractionResult.SUCCESS;

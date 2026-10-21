@@ -37,9 +37,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
+import com.github.alexthe666.rats.server.inventory.container.RatsItemStackHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
@@ -89,12 +89,10 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 		}
 	};
 
-	public final IItemHandlerModifiable bufferHandler = new TableItemHandlers.BufferHandler(this);
-	public final IItemHandlerModifiable matrixHandler = new TableItemHandlers.MatrixHandler(this);
-	public final IItemHandlerModifiable resultHandler = new TableItemHandlers.ResultHandler(this);
-
-	protected final IItemHandlerModifiable combinedHandler =
-			new CombinedInvWrapper(this.matrixHandler, this.bufferHandler);
+	// 26.3: ItemStackHandler/CombinedInvWrapper are gone; these are transfer-API handlers (RatsItemStackHandler).
+	public final RatsItemStackHandler bufferHandler = new TableItemHandlers.BufferHandler(this);
+	public final RatsItemStackHandler matrixHandler = new TableItemHandlers.MatrixHandler(this);
+	public final RatsItemStackHandler resultHandler = new TableItemHandlers.ResultHandler(this);
 	public final CraftingContainer matrixWrapper =
 			new CraftingContainerWrapper(this.matrixHandler);
 
@@ -142,7 +140,7 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 				net.minecraft.world.item.crafting.CraftingInput craftingInput = makeCraftingInput(te.matrixWrapper);
 				ItemStack addStack = te.recipeUsed.map(r -> r.value().assemble(craftingInput)).orElse(ItemStack.EMPTY);
 				if (!addStack.isEmpty()) {
-					IItemHandlerModifiable rh = te.resultHandler;
+					RatsItemStackHandler rh = te.resultHandler;
 					rh.setStackInSlot(0, addStack.copyWithCount(addStack.getCount() + rh.getStackInSlot(0).getCount()));
 					te.consumeIngredients(null);
 				}
@@ -225,9 +223,10 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 
 	@Override
 	public void clearContent() {
-		IItemHandlerModifiable h = this.combinedHandler;
-		for (int i = 0; i < h.getSlots(); i++) {
-			h.setStackInSlot(i, ItemStack.EMPTY);
+		for (RatsItemStackHandler h : new RatsItemStackHandler[]{this.matrixHandler, this.bufferHandler}) {
+			for (int i = 0; i < h.getSlots(); i++) {
+				h.setStackInSlot(i, ItemStack.EMPTY);
+			}
 		}
 		this.updateRecipe();
 	}
@@ -275,9 +274,9 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 	protected void loadAdditional(ValueInput tag) {
 		super.loadAdditional(tag);
 		// 26.1: handlers implement ValueIOSerializable (serialize/deserialize on Value IO children).
-		((ValueIOSerializable) this.bufferHandler).deserialize(tag.childOrEmpty("Buffer"));
-		((ValueIOSerializable) this.matrixHandler).deserialize(tag.childOrEmpty("Matrix"));
-		((ValueIOSerializable) this.resultHandler).deserialize(tag.childOrEmpty("Result"));
+		this.bufferHandler.deserialize(tag.childOrEmpty("Buffer"));
+		this.matrixHandler.deserialize(tag.childOrEmpty("Matrix"));
+		this.resultHandler.deserialize(tag.childOrEmpty("Result"));
 		this.customName = parseCustomNameSafe(tag, "CustomName");
 		this.cookTime = tag.getIntOr("CookTime", 0);
 		this.selectedRecipeIndex = tag.getIntOr("SelectedRecipe", 0);
@@ -288,9 +287,9 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 	@Override
 	protected void saveAdditional(ValueOutput tag) {
 		super.saveAdditional(tag);
-		((ValueIOSerializable) this.bufferHandler).serialize(tag.child("Buffer"));
-		((ValueIOSerializable) this.matrixHandler).serialize(tag.child("Matrix"));
-		((ValueIOSerializable) this.resultHandler).serialize(tag.child("Result"));
+		this.bufferHandler.serialize(tag.child("Buffer"));
+		this.matrixHandler.serialize(tag.child("Matrix"));
+		this.resultHandler.serialize(tag.child("Result"));
 		if (this.hasCustomName()) {
 			tag.store("CustomName", ComponentSerialization.CODEC, this.customName);
 		}
@@ -318,7 +317,10 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 		return new RatCraftingTableMenu(id, inventory, this, this.dataAccess);
 	}
 
-	public IItemHandlerModifiable itemHandler(@Nullable Direction side) {
+	// 26.3: exposed as Capabilities.Item.BLOCK (RatsCapabilities): hoppers pull the result from below, everything else
+	// reaches the input buffer.
+	@Nullable
+	public ResourceHandler<ItemResource> itemHandler(@Nullable Direction side) {
 		if (this.remove) return null;
 		return side == Direction.DOWN ? this.resultHandler : this.bufferHandler;
 	}
@@ -333,7 +335,7 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 			NonNullList<ItemStack> remainingStacks = recipe.getRemainingItems(makeCraftingInput(this.matrixWrapper));
 
 			if (this.hasValidRecipe) {
-				IItemHandlerModifiable h = this.bufferHandler;
+				RatsItemStackHandler h = this.bufferHandler;
 				// 26.1: getIngredients() is gone; placementInfo().ingredients() is the non-empty ingredient list.
 				recipe.placementInfo().ingredients().forEach(i -> {
 					for (int j = 0; j < h.getSlots(); j++) {
@@ -352,11 +354,12 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 						return this.hasValidRecipe ? stack : this.matrixHandler.insertItem(i, stack, false);
 					}) // Insert back the corresponding matrix slot if crafted from there
 					.filter(stack -> !stack.isEmpty())
-					.map(stack -> ItemHandlerHelper.insertItemStacked(this.bufferHandler, stack, false))
+					.map(stack -> this.bufferHandler.insertItemStacked(stack, false))
 					.filter(stack -> !stack.isEmpty())
 					.forEach(stack -> {
 						if (player != null) {
-							ItemHandlerHelper.giveItemToPlayer(player, stack);
+							// 26.3: ItemHandlerHelper.giveItemToPlayer is gone; vanilla places it in the inventory or drops it.
+							player.getInventory().placeItemBackInInventory(stack, net.minecraft.util.Prediction.SERVER_ONLY);
 						} else {
 							this.outputStack(stack);
 						}
@@ -365,7 +368,7 @@ public class RatCraftingTableBlockEntity extends BlockEntity implements MenuProv
 	}
 
 	private void outputStack(ItemStack stack) {
-		ItemStack newStack = ItemHandlerHelper.insertItemStacked(this.bufferHandler, stack, false);
+		ItemStack newStack = this.bufferHandler.insertItemStacked(stack, false);
 
 		if (!newStack.isEmpty() && this.getLevel() != null) {
 			ItemEntity item = new ItemEntity(this.getLevel(), this.getBlockPos().getX() + 0.5F, this.getBlockPos().getY() + 1.0D, this.getBlockPos().getZ() + 0.5F, newStack);

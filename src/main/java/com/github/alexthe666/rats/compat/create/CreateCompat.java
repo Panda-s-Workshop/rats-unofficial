@@ -3,7 +3,7 @@ package com.github.alexthe666.rats.compat.create;
 import com.github.alexthe666.rats.RatsMod;
 
 // Soft compat with Create. Most of our cross-mod usefulness is already free: rats and rat blocks
-// expose standard NeoForge IItemHandler / IFluidHandler capabilities, so Create's funnels, belts,
+// expose standard NeoForge transfer-API capabilities (Capabilities.Item/Fluid/Energy, 26.3), so Create's funnels, belts,
 // chutes and depots already pull from / push to rat tubes and rat-cage inventories without any
 // further glue.
 //

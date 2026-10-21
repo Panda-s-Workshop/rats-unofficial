@@ -9,18 +9,17 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import com.github.alexthe666.rats.server.inventory.container.RatsItemStackHandler;
 
 import java.util.List;
 
-public class RatCraftingResultSlot extends SlotItemHandler {
+public class RatCraftingResultSlot extends RatsHandlerSlot {
 
 	private final RatCraftingTableBlockEntity table;
 	private final Player player;
 	private int amountCrafted;
 
-	public RatCraftingResultSlot(IItemHandler handler, Player player, RatCraftingTableBlockEntity te, int slotIndex, int xPosition, int yPosition) {
+	public RatCraftingResultSlot(RatsItemStackHandler handler, Player player, RatCraftingTableBlockEntity te, int slotIndex, int xPosition, int yPosition) {
 		super(handler, slotIndex, xPosition, yPosition);
 		this.table = te;
 		this.player = player;

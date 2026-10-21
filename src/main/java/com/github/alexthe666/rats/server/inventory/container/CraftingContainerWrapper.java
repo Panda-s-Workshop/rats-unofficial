@@ -2,15 +2,15 @@ package com.github.alexthe666.rats.server.inventory.container;
 
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
 public class CraftingContainerWrapper extends TransientCraftingContainer {
 
-	private final IItemHandlerModifiable inv;
+	private final RatsItemStackHandler inv;
 
-	public CraftingContainerWrapper(IItemHandlerModifiable handler) {
+	// 26.3: wraps the transfer-API RatsItemStackHandler (IItemHandlerModifiable is gone).
+	public CraftingContainerWrapper(RatsItemStackHandler handler) {
 		super(null, 3, 3);
 		this.inv = handler;
 	}
@@ -43,8 +43,11 @@ public class CraftingContainerWrapper extends TransientCraftingContainer {
 
 	@Override
 	public ItemStack removeItem(int index, int count) {
-		ItemStack stack = this.inv.getStackInSlot(index);
-		return stack.isEmpty() ? ItemStack.EMPTY : stack.split(count);
+		ItemStack stack = this.inv.getStackInSlot(index).copy();
+		if (stack.isEmpty()) return ItemStack.EMPTY;
+		ItemStack removed = stack.split(count);
+		this.inv.setStackInSlot(index, stack);
+		return removed;
 	}
 
 	@Override

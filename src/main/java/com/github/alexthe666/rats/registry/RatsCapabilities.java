@@ -47,9 +47,17 @@ public final class RatsCapabilities {
 				RatsBlockEntityRegistry.RAT_CAGE_WHEEL.get(),
 				(be, side) -> be.energyStorage);
 
-		// TODO(26.1 follow-up, external-automation only — the mod's own AI does not need these):
-		//   - Capabilities.Item.BLOCK for RAT_CRAFTING_TABLE (buffer/result split by side; its five
-		//     internal handlers need a hand rewrite onto ItemStacksResourceHandler first)
-		//   - Capabilities.Item.ENTITY for TAMED_RAT's carry inventory
+		// 26.3: the crafting table's handlers are transfer-API RatsItemStackHandlers now, so it is exposed again
+		// like before the 26.1 port: the result from below, the input buffer from every other side.
+		event.registerBlockEntity(
+				Capabilities.Item.BLOCK,
+				RatsBlockEntityRegistry.RAT_CRAFTING_TABLE.get(),
+				(be, side) -> be.itemHandler(side));
+
+		// The tamed rat's own inventory (hands and armour slots), as before the 26.1 port.
+		event.registerEntity(
+				Capabilities.Item.ENTITY,
+				RatsEntityRegistry.TAMED_RAT.get(),
+				(rat, ctx) -> rat.itemHandler);
 	}
 }

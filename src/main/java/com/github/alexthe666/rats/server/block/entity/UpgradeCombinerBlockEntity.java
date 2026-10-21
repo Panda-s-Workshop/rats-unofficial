@@ -31,8 +31,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.HolderLookup;
 
@@ -49,14 +50,23 @@ public class UpgradeCombinerBlockEntity extends BaseContainerBlockEntity impleme
 	public int burnDuration;
 	public int cookTime;
 	public int totalCookTime;
-	private final IItemHandler topHandler = new SidedInvWrapper(this, Direction.UP);
-	private final IItemHandler bottomHandler = new SidedInvWrapper(this, Direction.DOWN);
-	private final IItemHandler sideHandler = new SidedInvWrapper(this, Direction.NORTH);
+	// 26.3: SidedInvWrapper is gone; WorldlyContainerWrapper is the transfer-API equivalent. Created lazily because the
+	// wrapper reads the container size, and combinerStacks is not set yet while the fields initialise.
+	@Nullable
+	private ResourceHandler<ItemResource> topHandler, bottomHandler, sideHandler;
 
-	public IItemHandler itemHandler(@Nullable Direction side) {
+	@Nullable
+	public ResourceHandler<ItemResource> itemHandler(@Nullable Direction side) {
 		if (this.remove || side == null) return null;
-		if (side == Direction.UP) return this.topHandler;
-		if (side == Direction.DOWN) return this.bottomHandler;
+		if (side == Direction.UP) {
+			if (this.topHandler == null) this.topHandler = new WorldlyContainerWrapper(this, Direction.UP);
+			return this.topHandler;
+		}
+		if (side == Direction.DOWN) {
+			if (this.bottomHandler == null) this.bottomHandler = new WorldlyContainerWrapper(this, Direction.DOWN);
+			return this.bottomHandler;
+		}
+		if (this.sideHandler == null) this.sideHandler = new WorldlyContainerWrapper(this, Direction.NORTH);
 		return this.sideHandler;
 	}
 	private NonNullList<ItemStack> combinerStacks = NonNullList.withSize(4, ItemStack.EMPTY);

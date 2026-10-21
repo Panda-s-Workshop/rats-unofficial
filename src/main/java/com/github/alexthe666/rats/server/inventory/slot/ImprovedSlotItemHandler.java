@@ -3,15 +3,14 @@ package com.github.alexthe666.rats.server.inventory.slot;
 import com.github.alexthe666.rats.server.block.entity.RatCraftingTableBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import com.github.alexthe666.rats.server.inventory.container.RatsItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class ImprovedSlotItemHandler extends SlotItemHandler {
+public class ImprovedSlotItemHandler extends RatsHandlerSlot {
 	private final RatCraftingTableBlockEntity table;
 	private final boolean ghostSlot;
 
-	public ImprovedSlotItemHandler(RatCraftingTableBlockEntity table, IItemHandler itemHandler, int index, int xPosition, int yPosition, boolean ghostSlot) {
+	public ImprovedSlotItemHandler(RatCraftingTableBlockEntity table, RatsItemStackHandler itemHandler, int index, int xPosition, int yPosition, boolean ghostSlot) {
 		super(itemHandler, index, xPosition, yPosition);
 		this.table = table;
 		this.ghostSlot = ghostSlot;

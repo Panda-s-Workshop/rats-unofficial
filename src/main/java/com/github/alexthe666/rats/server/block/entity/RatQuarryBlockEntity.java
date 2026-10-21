@@ -27,8 +27,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.IntStream;
@@ -36,7 +34,7 @@ import net.minecraft.core.HolderLookup;
 
 public class RatQuarryBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
 	private static final int[] STACKS = IntStream.range(0, 64).toArray();
-	public final IItemHandler itemHandler = new SidedInvWrapper(this, Direction.UP);
+	// 26.3: the SidedInvWrapper field is gone; RatsCapabilities exposes the quarry through WorldlyContainerWrapper.
 	private NonNullList<ItemStack> inventory = NonNullList.withSize(64, ItemStack.EMPTY);
 	private int tick;
 

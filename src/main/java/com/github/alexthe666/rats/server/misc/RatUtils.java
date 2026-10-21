@@ -24,6 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -35,7 +36,9 @@ import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,11 +133,19 @@ public class RatUtils {
 		}
 	}
 
-	public static int getItemSlotFromItemHandler(TamedRat rat, IItemHandler handler, RandomSource random) {
+	// 26.3: IItemHandler is gone; same lookup on a transfer-API handler (only what can actually be extracted counts).
+	public static int getItemSlotFromItemHandler(TamedRat rat, ResourceHandler<ItemResource> handler, RandomSource random) {
 		List<Integer> items = new ArrayList<>();
-		for (int i = 0; i < handler.getSlots(); i++) {
-			ItemStack stack = handler.extractItem(i, handler.getSlotLimit(i), true);
-			if (rat.canRatPickupItem(stack)) {
+		for (int i = 0; i < handler.size(); i++) {
+			ItemResource resource = handler.getResource(i);
+			if (resource.isEmpty()) {
+				continue;
+			}
+			int extractable;
+			try (Transaction tx = Transaction.openRoot()) {
+				extractable = handler.extract(i, resource, handler.getAmountAsInt(i), tx);
+			}
+			if (extractable > 0 && rat.canRatPickupItem(resource.toStack(extractable))) {
 				items.add(i);
 			}
 		}
@@ -221,10 +232,10 @@ public class RatUtils {
 			for (BlockPos pos : allBlocks) {
 				BlockState block = level.getBlockState(pos);
 				if (block.getBlock() instanceof BonemealableBlock igrowable) {
-					if (igrowable.isValidBonemealTarget(level, pos, block) && level.getRandom().nextInt(3) == 0) {
+					if (igrowable.isValidBonemealTarget(level, pos, block, BonemealSource.MOB) && level.getRandom().nextInt(3) == 0) {
 						if (!level.isClientSide()) {
 							level.levelEvent(2005, pos, 0);
-							igrowable.performBonemeal((ServerLevel) level, level.getRandom(), pos, block);
+							igrowable.performBonemeal((ServerLevel) level, level.getRandom(), pos, block, BonemealSource.MOB);
 						}
 					}
 				}
@@ -234,10 +245,10 @@ public class RatUtils {
 
 	private static boolean canPlantBeBonemealed(Level level, BlockPos pos, BlockState BlockState) {
 		if (BlockState.getBlock() instanceof BonemealableBlock igrowable && !(BlockState.getBlock() instanceof TallGrassBlock) && !(BlockState.getBlock() instanceof GrassBlock)) {
-			if (igrowable.isValidBonemealTarget(level, pos, BlockState)) {
+			if (igrowable.isValidBonemealTarget(level, pos, BlockState, BonemealSource.MOB)) {
 				if (!level.isClientSide()) {
 					//  igrowable.grow(level, level.rand, target, BlockState);
-					return igrowable.isBonemealSuccess(level, level.getRandom(), pos, BlockState);
+					return igrowable.isBonemealSuccess(level, level.getRandom(), pos, BlockState, BonemealSource.MOB);
 				}
 			}
 		}

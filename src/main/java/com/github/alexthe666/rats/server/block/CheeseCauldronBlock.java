@@ -29,15 +29,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import java.util.Map;
 
 public class CheeseCauldronBlock extends AbstractCauldronBlock {
-	public static final com.mojang.serialization.MapCodec<CheeseCauldronBlock> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
-			propertiesCodec()
-	).apply(instance, props -> new CheeseCauldronBlock(props, null, net.minecraft.core.cauldron.CauldronInteractions.WATER)));
-
-	@Override
-	protected com.mojang.serialization.MapCodec<? extends AbstractCauldronBlock> codec() {
-		return CODEC;
-	}
-
 	private final DeferredHolder<Block, Block> drop;
 
 	// 26.1: CauldronInteraction.InteractionMap became CauldronInteraction.Dispatcher.
@@ -55,7 +46,7 @@ public class CheeseCauldronBlock extends AbstractCauldronBlock {
 			level.playSound(null, pos, RatsSoundRegistry.CHEESE_CAULDRON_EMPTY.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 			level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 1.0F);
 			if (!player.getInventory().add(new ItemStack(this.drop.get()))) {
-				player.drop(new ItemStack(this.drop.get()), false);
+				player.drop(new ItemStack(this.drop.get()), false, net.minecraft.util.Prediction.PREDICTED);
 			}
 		}
 		return InteractionResult.SUCCESS;

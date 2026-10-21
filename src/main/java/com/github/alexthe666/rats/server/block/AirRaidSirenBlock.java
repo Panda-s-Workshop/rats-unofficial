@@ -86,7 +86,7 @@ public class AirRaidSirenBlock extends Block implements CustomItemRarity {
 				}
 				return true;
 			}
-			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
+			LightningBolt bolt = net.minecraft.world.entity.EntityTypes.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
 			assert bolt != null;
 			bolt.setPos(Vec3.atCenterOf(pos));
 			bolt.setVisualOnly(true);

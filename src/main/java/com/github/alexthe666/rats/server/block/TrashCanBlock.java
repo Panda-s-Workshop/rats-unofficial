@@ -49,13 +49,6 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("deprecation")
 public class TrashCanBlock extends BaseEntityBlock implements WorldlyContainerHolder {
-	public static final com.mojang.serialization.MapCodec<TrashCanBlock> CODEC = simpleCodec(TrashCanBlock::new);
-
-	@Override
-	protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
-	}
-
 
 	// 26.1: DirectionProperty was removed; use EnumProperty<Direction>.
 	public static final EnumProperty<Direction> FACING = EnumProperty.create("facing", Direction.class, Direction.Plane.HORIZONTAL);

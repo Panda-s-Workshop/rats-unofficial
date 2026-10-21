@@ -34,9 +34,13 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
@@ -105,8 +109,9 @@ public class AutoCurdlerBlockEntity extends BaseContainerBlockEntity implements 
 		if (stack.is(Items.MILK_BUCKET)) {
 			return true;
 		}
-		Optional<FluidStack> fluidStack = FluidUtil.getFluidContained(stack);
-		return fluidStack.isPresent() && fluidStack.get().getFluid().isSame(NeoForgeMod.MILK.get());
+		// 26.3: the old FluidUtil.getFluidContained is gone; the transfer FluidUtil reads the item's fluid capability.
+		FluidStack fluidStack = FluidUtil.getFirstStackContained(stack);
+		return !fluidStack.isEmpty() && fluidStack.getFluid().isSame(NeoForgeMod.MILK.get());
 	}
 
 	@Override
@@ -216,28 +221,27 @@ public class AutoCurdlerBlockEntity extends BaseContainerBlockEntity implements 
 				te.cookTime = Mth.clamp(te.cookTime - 2, 0, te.totalCookTime);
 			}
 			if (isMilk(te.getItem(0))) {
-				Optional<FluidStack> fluidStackOptional = FluidUtil.getFluidContained(te.getItem(0));
-				fluidStackOptional.ifPresent(fluidStack -> {
-					Optional<IFluidHandlerItem> fluidHandlerOptional = FluidUtil.getFluidHandler(te.getItem(0));
-					fluidHandlerOptional.ifPresent(fluidHandler -> {
-						if (fluidHandler.drain(TANK_CAPACITY - te.getTankAmount(), IFluidHandler.FluidAction.SIMULATE).getAmount() > 0) {
-							int amount;
-							try (Transaction tx = Transaction.openRoot()) {
-								amount = te.tank.insert(FluidResource.of(fluidStack), fluidStack.getAmount(), tx);
-								tx.commit();
-							}
-							if (amount > 0) {
-								fluidHandler.drain(amount, IFluidHandler.FluidAction.EXECUTE);
-								//support container changing tanks
-								ItemStack container = fluidHandler.getContainer();
-								if (te.getItem(0) != container) {
-									te.setItem(0, container);
-								}
-							}
-							te.setChanged();
+				// 26.3: IFluidHandlerItem is gone. The item's fluid handler works on a one-slot copy of the input
+				// stack, so a container that changes item (milk bucket -> bucket) lands back in slot 0 even though
+				// the slot itself only accepts milk.
+				ItemStack input = te.getItem(0);
+				ItemStacksResourceHandler itemSlot = new ItemStacksResourceHandler(1);
+				itemSlot.set(0, ItemResource.of(input), input.getCount());
+				ResourceHandler<FluidResource> fluidHandler = ItemAccess.forHandlerIndexStrict(itemSlot, 0).getCapability(Capabilities.Fluid.ITEM);
+				if (fluidHandler != null) {
+					int amount;
+					try (Transaction tx = Transaction.openRoot()) {
+						amount = ResourceHandlerUtil.move(fluidHandler, te.tank, resource -> true, TANK_CAPACITY - te.getTankAmount(), tx);
+						if (amount > 0) {
+							tx.commit();
 						}
-					});
-				});
+					}
+					if (amount > 0) {
+						//support container changing tanks
+						te.setItem(0, ItemUtil.getStack(itemSlot, 0));
+						te.setChanged();
+					}
+				}
 			}
 		}
 	}
