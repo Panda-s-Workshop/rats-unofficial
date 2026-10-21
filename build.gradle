@@ -113,3 +113,12 @@ idea {
         downloadJavadoc = true
     }
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'rats'
+            from components.java
+        }
+    }
+}
