@@ -3,6 +3,7 @@
     "description": {
       "translate": "pack.rats.ratlantis"
     },
-    "pack_format": 48
+    "min_format": 121,
+    "max_format": 121
   }
 }
