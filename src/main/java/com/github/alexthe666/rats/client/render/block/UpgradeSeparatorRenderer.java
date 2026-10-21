@@ -60,9 +60,9 @@ public class UpgradeSeparatorRenderer implements BlockEntityRenderer<UpgradeSepa
 		stack.pushPose();
 		stack.translate(0.5D, 0.15D, 0.5D);
 		stack.translate(0.0F, 1F + Mth.sin(state.bobTicks * 0.1F) * 0.1F, 0.0F);
-		stack.mulPose(Axis.YP.rotationDegrees(-state.rotation * 0.1F * (180F / (float) Math.PI)));
-		stack.mulPose(Axis.ZP.rotationDegrees(180));
-		stack.mulPose(Axis.XP.rotationDegrees(90));
+		stack.rotate(Axis.YP.rotationDegrees(-state.rotation * 0.1F * (180F / (float) Math.PI)));
+		stack.rotate(Axis.ZP.rotationDegrees(180));
+		stack.rotate(Axis.XP.rotationDegrees(90));
 		state.item.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 		stack.popPose();
 	}

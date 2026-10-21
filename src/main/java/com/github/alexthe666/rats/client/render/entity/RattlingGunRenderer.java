@@ -40,10 +40,10 @@ public class RattlingGunRenderer extends EntityRenderer<RattlingGun, RattlingGun
 		stack.pushPose();
 		stack.pushPose();
 		stack.translate(0, 1.5F, 0);
-		stack.mulPose(Axis.XP.rotationDegrees(180));
+		stack.rotate(Axis.XP.rotationDegrees(180));
 		collector.submitCustomGeometry(stack, TEXTURE, (pose, consumer) ->
 				GUN_BASE_MODEL.renderToBuffer(rebuildStack(pose), consumer, light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot));
 		// setupAnim runs inside the deferred callback so the shared static model holds this entity's pose when it draws.
 		collector.submitCustomGeometry(stack, TEXTURE, (pose, consumer) -> {
 			this.poseGun(gun, firing, age);
@@ -54,8 +54,8 @@ public class RattlingGunRenderer extends EntityRenderer<RattlingGun, RattlingGun
 		if (firing) {
 			stack.pushPose();
 			stack.translate(0, 1.6F, 0);
-			stack.mulPose(Axis.XP.rotationDegrees(180));
-			stack.mulPose(Axis.YP.rotationDegrees(state.yRot));
+			stack.rotate(Axis.XP.rotationDegrees(180));
+			stack.rotate(Axis.YP.rotationDegrees(state.yRot));
 			collector.submitCustomGeometry(stack, TEXTURE_FIRING, (pose, consumer) -> {
 				GUN_MODEL.resetToDefaultPose();
 				GUN_MODEL.setupAnim(gun, 0, 0, age, 0, 0);

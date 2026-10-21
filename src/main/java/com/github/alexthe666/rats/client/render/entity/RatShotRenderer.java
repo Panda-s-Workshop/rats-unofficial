@@ -37,8 +37,8 @@ public class RatShotRenderer extends EntityRenderer<RatShot, RatShotRenderer.Rat
 		stack.pushPose();
 		stack.scale(0.6F, -0.6F, 0.6F);
 		stack.translate(0F, -1.5F, 0F);
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot - 180));
-		stack.mulPose(Axis.XN.rotationDegrees(state.xRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot - 180));
+		stack.rotate(Axis.XN.rotationDegrees(state.xRot));
 
 		float f = state.ageInTicks * 0.5F;
 		float f1 = 1;

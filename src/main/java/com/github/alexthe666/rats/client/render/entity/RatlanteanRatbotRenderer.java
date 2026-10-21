@@ -38,7 +38,7 @@ public class RatlanteanRatbotRenderer extends MobRenderer<RatlanteanRatbot, Livi
 			// 26.1: walkAnimationPos is already partial-tick lerped, replacing position() - speed() * (1 - partialTick).
 			float f1 = state.walkAnimationPos + 6.0F;
 			float f2 = (Math.abs(f1 % 13.0F - 6.5F) - 3.25F) / 3.25F;
-			stack.mulPose(Axis.ZP.rotationDegrees(6.5F * f2));
+			stack.rotate(Axis.ZP.rotationDegrees(6.5F * f2));
 		}
 	}
 }

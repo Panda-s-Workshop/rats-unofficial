@@ -55,7 +55,7 @@ public class RatStriderMountRenderer extends MobRenderer<RatStriderMount, Living
 		public void submit(PoseStack stack, SubmitNodeCollector collector, int light, S state, float netHeadYaw, float headPitch) {
 			this.model.setupAnim(state);
 			int overlay = LivingEntityRenderer.getOverlayCoords(state, 0.0F);
-			collector.submitModel(this.model, state, stack, this.textureLocation, light, overlay, state.outlineColor, null);
+			collector.submitModel(this.model, state, stack, this.textureLocation, light, overlay, state.outlineColor);
 		}
 	}
 }

@@ -41,7 +41,7 @@ public class RatKingRenderer extends MobRenderer<RatKing, LivingEntityRenderStat
 			String s = ChatFormatting.stripFormatting(king.getName().getString());
 			if (("Dinnerbone".equals(s) || "Grumm".equals(s))) {
 				stack.translate(0.0D, state.boundingBoxHeight + 0.1F, 0.0D);
-				stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+				stack.rotate(Axis.ZP.rotationDegrees(180.0F));
 			}
 		}
 	}

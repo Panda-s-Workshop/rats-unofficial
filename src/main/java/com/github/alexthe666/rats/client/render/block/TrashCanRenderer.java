@@ -55,8 +55,8 @@ public class TrashCanRenderer implements BlockEntityRenderer<TrashCanBlockEntity
 		int light = state.lightCoords;
 		stack.pushPose();
 		stack.translate(0.5D, 1.501D, 0.5D);
-		stack.mulPose(Axis.XP.rotationDegrees(180));
-		stack.mulPose(Axis.YP.rotationDegrees(state.rotation));
+		stack.rotate(Axis.XP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(state.rotation));
 		MODEL_TRASH_CAN.animate(state.entity);
 		collector.submitCustomGeometry(stack, TEXTURE, (pose, consumer) ->
 				RatsRenderType.withSubmitPose(pose, this.scratch, s ->

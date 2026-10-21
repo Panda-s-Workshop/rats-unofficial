@@ -103,7 +103,7 @@ public class PiedPiperModel<S extends ArmedEntityRenderState> extends EntityMode
 	public void translateToHand(S state, HumanoidArm arm, PoseStack stack) {
 		this.getArm(arm).translateAndRotate(stack);
 		stack.translate(arm == HumanoidArm.RIGHT ? 0.25F : -0.25F, 0.2F, 0.1F);
-		stack.mulPose(Axis.ZP.rotationDegrees(arm == HumanoidArm.RIGHT ? 10 : -10));
+		stack.rotate(Axis.ZP.rotationDegrees(arm == HumanoidArm.RIGHT ? 10 : -10));
 	}
 
 	@Override

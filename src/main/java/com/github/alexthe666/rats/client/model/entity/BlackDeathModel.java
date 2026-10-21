@@ -106,7 +106,7 @@ public class BlackDeathModel extends HumanoidModel<HumanoidRenderState> {
 			this.leftArm.yRot = Mth.PI;
 		} else {
 			if (meleeAttacking) {
-				AnimationUtils.swingWeaponDown(this.rightArm, this.leftArm, state.mainArm, state.attackTime, state.ageInTicks);
+				AnimationUtils.swingWeaponDown(this.rightArm, this.leftArm, state.mainArm, state.swingAnimation, state.ageInTicks);
 			} else {
 				this.rightArm.setRotation(0.0F, 0.0F, 0.0F);
 				this.leftArm.setRotation(0.0F, 0.0F, 0.0F);

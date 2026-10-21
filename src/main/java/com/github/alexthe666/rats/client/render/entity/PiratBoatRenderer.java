@@ -25,7 +25,7 @@ public class PiratBoatRenderer extends MobRenderer<PiratBoat, LivingEntityRender
 	@Override
 	protected void scale(LivingEntityRenderState state, PoseStack stack) {
 		stack.scale(1.2F, 1.2F, 1.2F);
-		stack.mulPose(Axis.YP.rotationDegrees(90.0F));
+		stack.rotate(Axis.YP.rotationDegrees(90.0F));
 	}
 
 	@Override

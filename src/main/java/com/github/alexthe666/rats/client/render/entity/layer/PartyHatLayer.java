@@ -1,5 +1,6 @@
 package com.github.alexthe666.rats.client.render.entity.layer;
 
+import com.github.alexthe666.rats.client.render.RatsRenderType;
 import com.github.alexthe666.rats.RatsMod;
 import com.github.alexthe666.rats.client.model.RatsModelLayers;
 import com.github.alexthe666.rats.client.model.entity.PinkieModel;
@@ -96,10 +97,10 @@ public class PartyHatLayer<S extends LivingEntityRenderState, M extends EntityMo
 
 	private void submitHat(PoseStack stack, SubmitNodeCollector collector, int light, S state, boolean glint, int color, Identifier texture) {
 		int argb = ARGB.color(255, color);
-		collector.submitModel(this.partyHat, this.hatState, stack, RenderTypes.armorCutoutNoCull(texture), light, OverlayTexture.NO_OVERLAY, argb, null, state.outlineColor, null);
+		collector.submitModel(this.partyHat, this.hatState, stack, RenderTypes.armorCutoutNoCull(texture), light, OverlayTexture.NO_OVERLAY, argb, null, state.outlineColor);
 		if (glint) {
 			// 26.1: ItemRenderer.getArmorFoilBuffer is gone; foil is an extra armorEntityGlint pass (see vanilla EquipmentLayerRenderer).
-			collector.submitModel(this.partyHat, this.hatState, stack, RenderTypes.armorEntityGlint(), light, OverlayTexture.NO_OVERLAY, argb, null, state.outlineColor, null);
+			collector.submitModel(this.partyHat, this.hatState, stack, RatsRenderType.armorEntityGlint(), light, OverlayTexture.NO_OVERLAY, argb, null, state.outlineColor);
 		}
 	}
 }

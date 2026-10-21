@@ -38,8 +38,8 @@ public class PiratBoatSailLayer extends RenderLayer<LivingEntityRenderState, Pir
 
 		// 26.1: ItemRenderer.renderStatic is gone; items render through ItemStackRenderState.
 		stack.pushPose();
-		stack.mulPose(Axis.XP.rotationDegrees(180));
-		stack.mulPose(Axis.YP.rotationDegrees(90));
+		stack.rotate(Axis.XP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(90));
 		stack.translate(0F, -0.8F, -0.9F);
 		stack.scale(4F, 4F, 4F);
 		ItemStackRenderState bannerState = new ItemStackRenderState();
@@ -50,7 +50,7 @@ public class PiratBoatSailLayer extends RenderLayer<LivingEntityRenderState, Pir
 
 		stack.pushPose();
 		stack.pushPose();
-		stack.mulPose(Axis.YN.rotationDegrees(90));
+		stack.rotate(Axis.YN.rotationDegrees(90));
 		stack.translate(0, 0.1F, -0.6F);
 		stack.scale(0.75F, 0.75F, 0.75F);
 		collector.submitCustomGeometry(stack, RenderTypes.entityCutout(TEXTURE_PIRATE_CANNON), (pose, consumer) -> {
@@ -64,7 +64,7 @@ public class PiratBoatSailLayer extends RenderLayer<LivingEntityRenderState, Pir
 
 		if (boat.isFiring()) {
 			stack.pushPose();
-			stack.mulPose(Axis.YN.rotationDegrees(90));
+			stack.rotate(Axis.YN.rotationDegrees(90));
 			stack.translate(0, 0.1F, -0.6F);
 			stack.scale(0.75F, 0.75F, 0.75F);
 			collector.submitCustomGeometry(stack, RenderTypes.entityCutout(TEXTURE_PIRATE_CANNON_FIRE), (pose, consumer) -> {

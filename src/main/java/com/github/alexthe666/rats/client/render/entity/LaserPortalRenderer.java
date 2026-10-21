@@ -1,5 +1,6 @@
 package com.github.alexthe666.rats.client.render.entity;
 
+import com.github.alexthe666.rats.client.render.RatsRenderType;
 import com.github.alexthe666.rats.RatsMod;
 import com.github.alexthe666.rats.client.model.entity.LaserPortalModel;
 import com.github.alexthe666.rats.server.entity.misc.LaserPortal;
@@ -30,19 +31,19 @@ public class LaserPortalRenderer extends EntityRenderer<LaserPortal, LaserPortal
 		float d1 = state.scale;
 
 		stack.pushPose();
-		stack.mulPose(Axis.ZP.rotationDegrees(state.xRot));
+		stack.rotate(Axis.ZP.rotationDegrees(state.xRot));
 		stack.pushPose();
 		stack.scale(1.5F * d1, 1.5F * d1, 1.5F * d1);
 		stack.translate(0, 0.5F, 0);
 		stack.translate(0, 1 - d1, 0);
-		stack.mulPose(Axis.YP.rotationDegrees(90));
-		stack.mulPose(Axis.XP.rotationDegrees(90));
-		stack.mulPose(Axis.ZP.rotationDegrees(state.yRot - 90.0F));
-		stack.mulPose(Axis.YP.rotationDegrees(state.ageInTicks * 10));
+		stack.rotate(Axis.YP.rotationDegrees(90));
+		stack.rotate(Axis.XP.rotationDegrees(90));
+		stack.rotate(Axis.ZP.rotationDegrees(state.yRot - 90.0F));
+		stack.rotate(Axis.YP.rotationDegrees(state.ageInTicks * 10));
 		// 26.1: ItemRenderer.getFoilBuffer is gone; a foiled model is a base submit plus an entityGlint submit.
 		collector.submitCustomGeometry(stack, RenderTypes.entityCutout(PORTAL), (pose, consumer) ->
 				MODEL_NEO_RATLANTEAN.renderToBuffer(rebuildStack(pose), consumer, 240, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
-		collector.submitCustomGeometry(stack, RenderTypes.entityGlint(), (pose, consumer) ->
+		collector.submitCustomGeometry(stack, RatsRenderType.entityGlint(), (pose, consumer) ->
 				MODEL_NEO_RATLANTEAN.renderToBuffer(rebuildStack(pose), consumer, 240, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF));
 		stack.popPose();
 		stack.popPose();

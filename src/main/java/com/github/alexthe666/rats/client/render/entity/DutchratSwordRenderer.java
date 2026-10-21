@@ -39,12 +39,12 @@ public class DutchratSwordRenderer extends EntityRenderer<DutchratSword, Dutchra
 	@Override
 	public void submit(DutchratSwordRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
 		stack.pushPose();
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot - 180.0F));
-		stack.mulPose(Axis.ZP.rotationDegrees(state.xRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot - 180.0F));
+		stack.rotate(Axis.ZP.rotationDegrees(state.xRot));
 		stack.translate(0.0F, 0.5F, 0.0F);
 		stack.scale(3.0F, 3.0F, 3.0F);
-		stack.mulPose(Axis.YP.rotationDegrees(90.0F));
-		stack.mulPose(Axis.ZP.rotationDegrees(state.ageInTicks * 20.0F));
+		stack.rotate(Axis.YP.rotationDegrees(90.0F));
+		stack.rotate(Axis.ZP.rotationDegrees(state.ageInTicks * 20.0F));
 		stack.translate(0.0F, -0.15F, 0.0F);
 		state.item.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		stack.popPose();

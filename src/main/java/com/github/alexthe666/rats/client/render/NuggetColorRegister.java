@@ -53,15 +53,16 @@ public class NuggetColorRegister {
 		int vMax = image.contents().height();
 		// 26.1: getPixelRGBA now delegates to NativeImage#getPixel and returns ARGB (it used to be ABGR),
 		// so red/blue channel shifts are swapped relative to the 1.20 code.
+		// 26.3: the method is NeoForge's getPixelARGB.
 		for (float i = 0; i < uMax; i++)
 			for (float j = 0; j < vMax; j++) {
-				int alpha = image.getPixelRGBA(0, (int) i, (int) j) >> 24 & 0xFF;
+				int alpha = image.getPixelARGB(0, (int) i, (int) j) >> 24 & 0xFF;
 				if (alpha != 255) {
 					continue;
 				}
-				red += image.getPixelRGBA(0, (int) i, (int) j) >> 16 & 0xFF;
-				green += image.getPixelRGBA(0, (int) i, (int) j) >> 8 & 0xFF;
-				blue += image.getPixelRGBA(0, (int) i, (int) j) & 0xFF;
+				red += image.getPixelARGB(0, (int) i, (int) j) >> 16 & 0xFF;
+				green += image.getPixelARGB(0, (int) i, (int) j) >> 8 & 0xFF;
+				blue += image.getPixelARGB(0, (int) i, (int) j) & 0xFF;
 				count++;
 			}
 		//Average color

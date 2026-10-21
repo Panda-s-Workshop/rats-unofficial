@@ -30,7 +30,7 @@ public class PlagueLayer<S extends LivingEntityRenderState, M extends EntityMode
 		if (entity != null && !(entity instanceof AbstractRat) && entity.hasEffect(RatsEffectRegistry.PLAGUE)) {
 			// 26.1: submitModel re-runs the parent model's setupAnim from the state at draw time, so this
 			// works both for vanilla models and for the Citadel bridge on modded renderers.
-			collector.submitModel(this.getParentModel(), state, stack, TEXTURE, light, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+			collector.submitModel(this.getParentModel(), state, stack, TEXTURE, light, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		}
 	}
 }

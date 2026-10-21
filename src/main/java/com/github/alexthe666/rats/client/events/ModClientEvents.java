@@ -73,7 +73,7 @@ import java.util.Objects;
 public class ModClientEvents {
 
 	public static boolean shouldRenderNameplates() {
-		return Minecraft.getInstance().screen == null || !(Minecraft.getInstance().screen instanceof RatScreen) && !(Minecraft.getInstance().screen instanceof CheeseStaffScreen);
+		return Minecraft.getInstance().gui.screen() == null || !(Minecraft.getInstance().gui.screen() instanceof RatScreen) && !(Minecraft.getInstance().gui.screen() instanceof CheeseStaffScreen);
 	}
 
 	@Nullable
@@ -82,7 +82,7 @@ public class ModClientEvents {
 	}
 
 	public static void openMobFilterScreen(InteractionHand hand) {
-		Minecraft.getInstance().setScreen(new MobFilterScreen(hand));
+		Minecraft.getInstance().gui.setScreen(new MobFilterScreen(hand));
 	}
 
 	// 26.1: ItemProperties was replaced by data-driven item model properties (assets/rats/items/*.json);

@@ -46,13 +46,13 @@ public abstract class AbstractRatRenderer<T extends AbstractRat> extends MobRend
 	}
 
 	@Override
-	public boolean shouldRender(T rat, Frustum camera, double camX, double camY, double camZ) {
+	public boolean shouldRender(T rat, Frustum camera, double camX, double camY, double camZ, float partialTicks) {
 		if (rat.isPassenger() && rat.getVehicle() != null && !rat.getVehicle().getPassengers().isEmpty() && rat.getVehicle().getPassengers().get(0) == rat && rat.getVehicle() instanceof LivingEntity living) {
 			if (living.getItemBySlot(EquipmentSlot.HEAD).is(RatsItemRegistry.CHEF_TOQUE.get())) {
 				return false;
 			}
 		}
-		return super.shouldRender(rat, camera, camX, camY, camZ);
+		return super.shouldRender(rat, camera, camX, camY, camZ, partialTicks);
 	}
 
 	@Override

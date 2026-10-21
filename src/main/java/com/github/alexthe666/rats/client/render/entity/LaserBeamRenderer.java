@@ -30,18 +30,18 @@ public class LaserBeamRenderer extends EntityRenderer<LaserBeam, LaserBeamRender
 	@Override
 	public void submit(LaserBeamRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
 		stack.pushPose();
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot - 90.0F));
-		stack.mulPose(Axis.ZP.rotationDegrees(state.xRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot - 90.0F));
+		stack.rotate(Axis.ZP.rotationDegrees(state.xRot));
 		float f9 = state.shake;
 		int r = state.red;
 		int g = state.green;
 		int b = state.blue;
 		if (f9 > 0.0F) {
 			float f10 = -Mth.sin(f9 * 3.0F) * f9;
-			stack.mulPose(Axis.ZP.rotationDegrees(f10));
+			stack.rotate(Axis.ZP.rotationDegrees(f10));
 		}
 
-		stack.mulPose(Axis.XP.rotationDegrees(45.0F));
+		stack.rotate(Axis.XP.rotationDegrees(45.0F));
 		stack.scale(0.05625F, 0.05625F, 0.05625F);
 		stack.translate(-4.0D, 0.0D, 0.0D);
 		int light = 240;
