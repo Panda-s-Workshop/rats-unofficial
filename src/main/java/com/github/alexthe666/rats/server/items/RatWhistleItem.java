@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import net.minecraft.world.item.component.SwingAnimation;
 
 public class RatWhistleItem extends LoreTagItem {
 
@@ -48,7 +49,7 @@ public class RatWhistleItem extends LoreTagItem {
 				}
 			}
 		}
-		player.swing(hand);
+		player.swing(hand, SwingAnimation.DEFAULT, false);
 		player.sendOverlayMessage(Component.translatable(RatsLangConstants.RAT_FLUTE_COUNT, ratCount).withStyle(ChatFormatting.GRAY));
 		level.playSound(player, player.blockPosition(), RatsSoundRegistry.RAT_WHISTLE.get(), SoundSource.PLAYERS, 1, 1.25F);
 

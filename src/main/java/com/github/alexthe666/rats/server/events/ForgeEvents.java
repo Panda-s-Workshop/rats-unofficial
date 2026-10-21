@@ -80,6 +80,9 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.item.component.SwingAnimation;
+import net.minecraft.util.Prediction;
+import net.minecraft.world.entity.EntityTypes;
 
 // NeoForge 21.1+ deprecated EventBusSubscriber.Bus / bus() in favor of letting the framework infer bus
 // from event types. GAME bus is the default for non-mod-init events, so the annotation no longer needs
@@ -107,7 +110,7 @@ public class ForgeEvents {
 					converted.setWillDespawn(false);
 				});
 				if (doctor != null) {
-					event.getEntity().swing(event.getHand());
+					event.getEntity().swing(event.getHand(), SwingAnimation.DEFAULT, false);
 					event.getLevel().playSound(null, doctor.blockPosition(), RatsSoundRegistry.PLAGUE_DOCTOR_SUMMON.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
 					if (!event.getEntity().isCreative()) {
 						heldItem.shrink(1);
@@ -263,7 +266,7 @@ public class ForgeEvents {
 		//Carry On passes null into their difficulty when firing this event so we have to check this unfortunately. They shouldnt be doing this.
 		if (event.getDifficulty() == null) return;
 		if (event.getDifficulty().getDifficulty() != Difficulty.PEACEFUL && (event.getSpawnType() == EntitySpawnReason.CHUNK_GENERATION || event.getSpawnType() == EntitySpawnReason.NATURAL)) {
-			if (event.getEntity() instanceof Strider strider && event.getEntity().getType() == EntityType.STRIDER) {
+			if (event.getEntity() instanceof Strider strider && event.getEntity().getType() == EntityTypes.STRIDER) {
 				if (!strider.isBaby() && !strider.isSaddled() && strider.getPassengers().isEmpty() && strider.getRandom().nextFloat() < 0.1F) {
 					DemonRat demonRat = RatsEntityRegistry.DEMON_RAT.get().create(event.getLevel().getLevel(), EntitySpawnReason.JOCKEY);
 					if (demonRat != null) {
@@ -286,9 +289,9 @@ public class ForgeEvents {
 			event.getItemStack().shrink(1);
 			ItemStack centipede = new ItemStack(RatsItemRegistry.CENTIPEDE.get());
 			if (!event.getEntity().addItem(centipede.copy())) {
-				event.getEntity().drop(centipede, false);
+				event.getEntity().drop(centipede, false, Prediction.PREDICTED);
 			}
-			event.getEntity().swing(event.getHand());
+			event.getEntity().swing(event.getHand(), SwingAnimation.DEFAULT, false);
 			event.getLevel().setBlockAndUpdate(event.getHitVec().getBlockPos(), Blocks.DIRT.defaultBlockState());
 			event.getLevel().playSound(null, event.getHitVec().getBlockPos(), SoundEvents.ROOTED_DIRT_BREAK, SoundSource.BLOCKS, 2.0F, 1.0F);
 		}
@@ -395,7 +398,7 @@ public class ForgeEvents {
 			event.setCanceled(true);
 			TamedRat rat = com.github.alexthe666.rats.server.capability.SelectedRat.get(event.getEntity());
 			if (rat != null) {
-				event.getEntity().swing(event.getHand());
+				event.getEntity().swing(event.getHand(), SwingAnimation.DEFAULT, false);
 				if (!event.getLevel().isClientSide()) {
 					PacketDistributor.sendToPlayer((ServerPlayer) event.getEntity(), new ManageRatStaffPacket(rat.getId(), event.getPos(), event.getFace().ordinal(), false, true, staff.getStaff(stack)));
 				}
@@ -407,7 +410,7 @@ public class ForgeEvents {
 
 	public static void handleArmSwing(ItemStack stack, Player player) {
 		if (stack.is(RatsItemRegistry.PLAGUE_SCYTHE.get())) {
-			if (player.swingTime == 0 && !player.isSpectator()) {
+			if (!player.isSwinging() && !player.isSpectator()) {
 				net.minecraft.world.item.component.ItemAttributeModifiers modifiers = stack.get(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS);
 				double totalDmg = 0;
 				if (modifiers != null) {

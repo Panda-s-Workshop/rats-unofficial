@@ -90,11 +90,11 @@ public class RatBeastMount extends RatMountBase implements IAnimatedEntity {
 			this.lookAt(this.getTarget(), 360, 80);
 			if (this.getAnimation() == ANIMATION_BITE && (this.getAnimationTick() > 8 && this.getAnimationTick() < 12)) {
 				this.getTarget().hurt(this.damageSources().mobAttack(this), 5);
-				this.getTarget().knockback(0.25F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ());
+				this.getTarget().knockback(0.25F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ(), this.damageSources().mobAttack(this), 0.0F);
 			}
 			if (this.getAnimation() == ANIMATION_SLASH && (this.getAnimationTick() == 8 || this.getAnimationTick() == 16)) {
 				this.getTarget().hurt(this.damageSources().mobAttack(this), 5);
-				this.getTarget().knockback(0.25F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ());
+				this.getTarget().knockback(0.25F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ(), this.damageSources().mobAttack(this), 0.0F);
 			}
 		}
 		if (!this.level().isClientSide() && this.getTarget() == null && this.getRandom().nextInt(150) == 0 && this.getAnimation() == NO_ANIMATION) {

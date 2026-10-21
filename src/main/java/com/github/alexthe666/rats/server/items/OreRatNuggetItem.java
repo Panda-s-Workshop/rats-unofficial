@@ -24,6 +24,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
+import net.minecraft.util.Prediction;
 
 public class OreRatNuggetItem extends Item {
 
@@ -37,7 +38,7 @@ public class OreRatNuggetItem extends Item {
 		level.playSound(null, player.getX(), player.getY(), player.getZ(), RatsSoundRegistry.RAT_NUGGET_ORE.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
 		ItemStack poopStack = getStoredItem(itemstack, new ItemStack(Items.IRON_INGOT));
 		if (!player.getInventory().add(poopStack)) {
-			player.drop(poopStack, false);
+			player.drop(poopStack, false, Prediction.PREDICTED);
 		}
 		if (!player.isCreative()) {
 			itemstack.shrink(1);

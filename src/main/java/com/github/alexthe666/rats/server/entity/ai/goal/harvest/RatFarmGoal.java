@@ -19,6 +19,7 @@ import net.neoforged.neoforge.common.Tags;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import net.minecraft.world.level.block.BonemealSource;
 
 public class RatFarmGoal extends BaseRatHarvestGoal {
 	private final TamedRat rat;
@@ -85,11 +86,11 @@ public class RatFarmGoal extends BaseRatHarvestGoal {
 						if (this.holdingBonemeal()) {
 							this.rat.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
 							if (block.getBlock() instanceof BonemealableBlock bonemealable) {
-								if (bonemealable.isValidBonemealTarget(this.rat.level(), this.getTargetBlock(), block)) {
+								if (bonemealable.isValidBonemealTarget(this.rat.level(), this.getTargetBlock(), block, BonemealSource.MOB)) {
 									if (!this.rat.level().isClientSide()) {
 										this.rat.level().levelEvent(2005, this.getTargetBlock(), 0);
 										this.rat.level().playSound(null, this.getTargetBlock(), SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS);
-										bonemealable.performBonemeal((ServerLevel) this.rat.level(), this.rat.level().getRandom(), this.getTargetBlock(), block);
+										bonemealable.performBonemeal((ServerLevel) this.rat.level(), this.rat.level().getRandom(), this.getTargetBlock(), block, BonemealSource.MOB);
 									}
 								}
 							}
@@ -134,8 +135,8 @@ public class RatFarmGoal extends BaseRatHarvestGoal {
 		// BEE_GROWABLES only covers crops/berries/cave vines — saplings need their own tag or the
 		// planter never bone-meals trees despite the upgrade description saying it does.
 		if (state.getBlock() instanceof BonemealableBlock bonemealable && (state.is(BlockTags.BEE_GROWABLES) || state.is(BlockTags.SAPLINGS))) {
-			if (bonemealable.isValidBonemealTarget(this.rat.level(), pos, state)) {
-				return bonemealable.isBonemealSuccess(this.rat.level(), this.rat.level().getRandom(), pos, state);
+			if (bonemealable.isValidBonemealTarget(this.rat.level(), pos, state, BonemealSource.MOB)) {
+				return bonemealable.isBonemealSuccess(this.rat.level(), this.rat.level().getRandom(), pos, state, BonemealSource.MOB);
 			}
 		}
 		return false;

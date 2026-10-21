@@ -30,7 +30,7 @@ public class TNTRatUpgradeItem extends BaseRatUpgradeItem implements PostAttackU
 		model.body1.translateRotate(stack);
 		stack.pushPose();
 		stack.translate(0F, 0.1F, 0.1F);
-		stack.mulPose(Axis.XP.rotationDegrees(180.0F));
+		stack.rotate(Axis.XP.rotationDegrees(180.0F));
 		stack.scale(2, 2, 2);
 		this.submitItem(new ItemStack(Items.TNT), rat, ItemDisplayContext.GROUND, stack, collector, light);
 		stack.popPose();

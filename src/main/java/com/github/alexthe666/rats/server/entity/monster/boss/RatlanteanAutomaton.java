@@ -212,7 +212,7 @@ public class RatlanteanAutomaton extends Monster implements IAnimatedEntity, Ran
 			this.lookAt(this.getTarget(), 360, 80);
 			if (this.getAnimation() == ANIMATION_MELEE && this.getAnimationTick() == 10) {
 				this.getTarget().hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
-				this.getTarget().knockback(1.5F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ());
+				this.getTarget().knockback(1.5F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ(), this.damageSources().mobAttack(this), 0.0F);
 				this.useRangedAttack = this.getRandom().nextInt(RatConfig.automatonShootChance) == 0;
 			}
 		}

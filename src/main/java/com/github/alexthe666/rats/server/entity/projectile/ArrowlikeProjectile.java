@@ -21,6 +21,7 @@ import net.minecraft.server.level.ServerEntity;
 
 import javax.annotation.Nullable;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityTypes;
 
 public abstract class ArrowlikeProjectile extends Projectile {
 	@Nullable
@@ -203,7 +204,7 @@ public abstract class ArrowlikeProjectile extends Projectile {
 			}
 		}
 
-		boolean flag = entity.getType() == EntityType.ENDERMAN;
+		boolean flag = entity.getType() == EntityTypes.ENDERMAN;
 		int k = entity.getRemainingFireTicks();
 		if (this.isOnFire() && !flag) {
 			entity.igniteForSeconds(5);

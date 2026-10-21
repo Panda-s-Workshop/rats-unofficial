@@ -17,10 +17,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import net.minecraft.core.Holder;
 
 public class GenericAddItemLootModifier extends LootModifier {
 
-	// 26.1: LootModifier.codecStart now includes the "priority" field, so the codec ctor takes it too
+	/// 26.1: LootModifier.codecStart now includes the "priority" field, so the codec ctor takes it too
+	// 26.3: LootModifier takes a single optional condition holder ("condition") instead of a "conditions" array
 	public static final MapCodec<GenericAddItemLootModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> LootModifier.codecStart(inst).and(
 					inst.group(
 							Codec.unboundedMap(BuiltInRegistries.ITEM.byNameCodec(), Codec.INT).fieldOf("items").forGetter(m -> m.items),
@@ -30,13 +33,13 @@ public class GenericAddItemLootModifier extends LootModifier {
 	private final Map<Item, Integer> items;
 	private final boolean makeNewPool;
 
-	private GenericAddItemLootModifier(LootItemCondition[] conditions, int priority, Map<Item, Integer> items, boolean makeNewPool) {
+	private GenericAddItemLootModifier(Optional<Holder<LootItemCondition>> conditions, int priority, Map<Item, Integer> items, boolean makeNewPool) {
 		super(conditions, priority);
 		this.items = items;
 		this.makeNewPool = makeNewPool;
 	}
 
-	public GenericAddItemLootModifier(LootItemCondition[] conditions, boolean makeNewPool, ItemStack... stacks) {
+	public GenericAddItemLootModifier(Optional<Holder<LootItemCondition>> conditions, boolean makeNewPool, ItemStack... stacks) {
 		super(conditions, IGlobalLootModifier.DEFAULT_PRIORITY);
 		this.items = new HashMap<>();
 		for (ItemStack stack : stacks) {

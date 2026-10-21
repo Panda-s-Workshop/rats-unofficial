@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.component.SwingAnimation;
 
 public class RatArrowItem extends ArrowItem {
 
@@ -39,7 +40,7 @@ public class RatArrowItem extends ArrowItem {
 		}
 		stack.shrink(1);
 		context.getPlayer().setItemInHand(context.getHand(), new ItemStack(Items.ARROW));
-		context.getPlayer().swing(context.getHand());
+		context.getPlayer().swing(context.getHand(), SwingAnimation.DEFAULT, false);
 		return InteractionResult.SUCCESS;
 	}
 
