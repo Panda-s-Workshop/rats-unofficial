@@ -26,3 +26,7 @@ secrets.properties
 
 # local build/iteration logs
 .build.log
+build/
+.gradle/
+run/
+runs/
