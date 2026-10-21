@@ -74,9 +74,9 @@ public class SupportRatUpgradeItem extends BaseRatUpgradeItem implements TickRat
 		model.translateToBody(stack);
 		stack.pushPose();
 		stack.scale(0.5F, 0.5F, 0.5F);
-		stack.mulPose(Axis.XP.rotationDegrees(-90));
-		stack.mulPose(Axis.YP.rotationDegrees(90));
-		stack.mulPose(Axis.ZP.rotationDegrees(-90));
+		stack.rotate(Axis.XP.rotationDegrees(-90));
+		stack.rotate(Axis.YP.rotationDegrees(90));
+		stack.rotate(Axis.ZP.rotationDegrees(-90));
 		stack.translate(0.0F, -0.1F, 0.275F);
 		this.submitItem(PotionContents.createItemStack(Items.SPLASH_POTION, Potions.HEALING), rat, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, stack, collector, light);
 		stack.translate(0.35F, 0.1F, 0.0F);
@@ -84,9 +84,9 @@ public class SupportRatUpgradeItem extends BaseRatUpgradeItem implements TickRat
 		stack.popPose();
 		stack.pushPose();
 		stack.scale(0.5F, 0.5F, 0.5F);
-		stack.mulPose(Axis.XP.rotationDegrees(-90));
-		stack.mulPose(Axis.YP.rotationDegrees(90));
-		stack.mulPose(Axis.ZP.rotationDegrees(-90));
+		stack.rotate(Axis.XP.rotationDegrees(-90));
+		stack.rotate(Axis.YP.rotationDegrees(90));
+		stack.rotate(Axis.ZP.rotationDegrees(-90));
 		stack.translate(0.0F, -0.1F, -0.4F);
 		this.submitItem(PotionContents.createItemStack(Items.SPLASH_POTION, Potions.SWIFTNESS), rat, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, stack, collector, light);
 		stack.translate(0.35F, 0.1F, 0.0F);

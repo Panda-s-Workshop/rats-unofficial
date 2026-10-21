@@ -108,6 +108,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.item.component.SwingAnimation;
+import net.minecraft.util.Prediction;
 
 public class TamedRat extends InventoryRat {
 
@@ -628,7 +630,7 @@ public class TamedRat extends InventoryRat {
 
 			if (flag && this.getVehicle() != null && this.isRidingSpecialMount()) {
 				this.getVehicle().hurtServer(level, source, amount);
-				this.invulnerableTime = 20;
+				this.setInvulnerableTime(20);
 				return false;
 			}
 
@@ -1006,12 +1008,12 @@ public class TamedRat extends InventoryRat {
 						this.playSound(SoundEvents.ARMOR_EQUIP_LEATHER.value(), 1, 1);
 						this.discard();
 					}
-					player.swing(hand);
+					player.swing(hand, SwingAnimation.DEFAULT, false);
 					return InteractionResult.SUCCESS;
 				}
 			} else if (itemstack.getItem() instanceof RatStaffItem) {
 				com.github.alexthe666.rats.server.capability.SelectedRat.set(player, this);
-				player.swing(hand);
+				player.swing(hand, SwingAnimation.DEFAULT, false);
 				if (!this.level().isClientSide() && player instanceof ServerPlayer sp) {
 					PacketDistributor.sendToPlayer(sp, new ManageRatStaffPacket(this.getId(), BlockPos.ZERO, Direction.NORTH.ordinal(), false, false, 0));
 					// 26.1: displayClientMessage was removed; send an overlay message from the server instead.
@@ -1036,12 +1038,12 @@ public class TamedRat extends InventoryRat {
 					if (itemstack.isEmpty()) {
 						player.setItemInHand(hand, arrow);
 					} else if (!player.getInventory().add(arrow)) {
-						player.drop(arrow, false);
+						player.drop(arrow, false, Prediction.SERVER_ONLY);
 					}
 					this.playSound(RatsSoundRegistry.RAT_HURT.get(), 1, 1);
 					this.discard();
 				}
-				player.swing(hand);
+				player.swing(hand, SwingAnimation.DEFAULT, false);
 				return InteractionResult.SUCCESS;
 			} else {
 				return super.mobInteract(player, hand);
@@ -1315,7 +1317,7 @@ public class TamedRat extends InventoryRat {
 				BlockPos blockpos1 = blockpos.below();
 				BlockState state = this.level().getBlockState(blockpos1);
 
-				if (state.blocksMotion()) {
+				if (state.is(net.minecraft.tags.BlockTags.BLOCKS_MOTION)) {
 					flag1 = true;
 				} else {
 					this.setPos(this.getX(), this.getY() - 1, this.getZ());

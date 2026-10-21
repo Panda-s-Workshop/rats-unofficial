@@ -187,12 +187,12 @@ public class Dutchrat extends Monster implements IAnimatedEntity {
 			this.lookAt(this.getTarget(), 360, 80);
 			if (this.getAnimation() == ANIMATION_SLASH && (this.getAnimationTick() == 10 || this.getAnimationTick() == 20)) {
 				this.getTarget().hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
-				this.getTarget().knockback(1.5F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ());
+				this.getTarget().knockback(1.5F, this.getX() - this.getTarget().getX(), this.getZ() - this.getTarget().getZ(), this.damageSources().mobAttack(this), 0.0F);
 				this.useRangedAttack = this.getRandom().nextInt(RatConfig.dutchratSwordThrowChance) == 0;
 			}
 			if (this.getAnimation() == ANIMATION_STAB && this.getAnimationTick() == 10) {
 				this.getTarget().hurt(this.damageSources().mobAttack(this), (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE));
-				this.getTarget().knockback(1.5F, this.getTarget().getX() - this.getX(), this.getTarget().getZ() - this.getZ());
+				this.getTarget().knockback(1.5F, this.getTarget().getX() - this.getX(), this.getTarget().getZ() - this.getZ(), this.damageSources().mobAttack(this), 0.0F);
 				this.useRangedAttack = this.getRandom().nextInt(RatConfig.dutchratSwordThrowChance) == 0;
 			}
 		}

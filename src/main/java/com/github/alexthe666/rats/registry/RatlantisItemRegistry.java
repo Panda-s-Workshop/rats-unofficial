@@ -15,6 +15,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 
 public class RatlantisItemRegistry {
 
@@ -62,8 +64,9 @@ public class RatlantisItemRegistry {
 	public static final DeferredHolder<Item, Item> RATTLING_GUN = ITEMS.register("rattling_gun", key -> new RattlingGunItem(RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(1)));
 	public static final DeferredHolder<Item, Item> IDOL_OF_RATLANTIS = ITEMS.register("idol_of_ratlantis", key -> new LoreTagItem(RatsRegistryHelper.withItemId(key, new Item.Properties()).rarity(RatsMod.RATLANTIS_SPECIAL).fireResistant(), 1));
 
-	public static final DeferredHolder<Item, Item> PIRAT_SIGN = ITEMS.register("pirat_sign", key -> new SignItem(RatlantisBlockRegistry.PIRAT_SIGN.get(), RatlantisBlockRegistry.PIRAT_WALL_SIGN.get(), RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(16)));
-	public static final DeferredHolder<Item, Item> PIRAT_HANGING_SIGN = ITEMS.register("pirat_hanging_sign", key -> new HangingSignItem(RatlantisBlockRegistry.PIRAT_HANGING_SIGN.get(), RatlantisBlockRegistry.PIRAT_WALL_HANGING_SIGN.get(), RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(16)));
+	// 26.3: SignItem is gone; vanilla signs are StandingAndWallBlockItems whose properties carry empty sign text components.
+	public static final DeferredHolder<Item, Item> PIRAT_SIGN = ITEMS.register("pirat_sign", key -> new StandingAndWallBlockItem(RatlantisBlockRegistry.PIRAT_SIGN.get(), RatlantisBlockRegistry.PIRAT_WALL_SIGN.get(), Direction.DOWN, RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(16).signText()));
+	public static final DeferredHolder<Item, Item> PIRAT_HANGING_SIGN = ITEMS.register("pirat_hanging_sign", key -> new HangingSignItem(RatlantisBlockRegistry.PIRAT_HANGING_SIGN.get(), RatlantisBlockRegistry.PIRAT_WALL_HANGING_SIGN.get(), RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(16).signText()));
 	public static final DeferredHolder<Item, Item> PIRAT_BOAT = ITEMS.register("pirat_boat", key -> new PiratBoatItem(false, PiratWoodBoat.Type.PIRAT, RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(1)));
 	public static final DeferredHolder<Item, Item> PIRAT_CHEST_BOAT = ITEMS.register("pirat_chest_boat", key -> new PiratBoatItem(true, PiratWoodBoat.Type.PIRAT, RatsRegistryHelper.withItemId(key, new Item.Properties()).stacksTo(1)));
 

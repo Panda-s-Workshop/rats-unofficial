@@ -70,15 +70,15 @@ public class HatItem extends Item {
 	 */
 	public void transformOnHead(AbstractRat rat, PoseStack stack) {
 		if (this == RatsItemRegistry.CHEF_TOQUE.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(25.0F));
+			stack.rotate(Axis.XN.rotationDegrees(25.0F));
 			stack.translate(0.0F, 0.35F, 0.3F); // 26.1: seat-lower like the pirat hat, backed off 0.25 (sat half a head too low at +0.5)
 		}
 		if (this == RatsItemRegistry.PIPER_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(10.0F));
+			stack.rotate(Axis.XN.rotationDegrees(10.0F));
 			stack.translate(0.0F, 0.5F, 0.1F); // 26.1: +0.5 seat-lower like the pirat hat
 		}
 		if (this == RatsItemRegistry.PIRAT_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			// 26.1: +0.5 vs the legacy -0.125 — the flattened geometry pivot leaves the tricorn
 			// ~0.3 blocks high on a pirat; this seats it on the skull.
 			stack.translate(0.0F, 0.375F, 0.0F);
@@ -89,22 +89,22 @@ public class HatItem extends Item {
 			float piratTranslate = rat instanceof GhostPirat ? 0.05F : 0.375F; // 26.1: match the pirat hat reseating
 			// 26.1: RenderSystem.setShaderColor is gone with the global shader-color state; the ghostly
 			// tint now has to come from the render layer's buffer/color, so the old 1.3F alpha boost is dropped.
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			stack.translate(0.0F, piratTranslate, 0.0F);
 			stack.scale(piratScale, piratScale, piratScale);
 		}
 		if (this == RatsItemRegistry.ARCHEOLOGIST_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			stack.translate(0.0F, 0.4F, 0.0F); // 26.1: +0.5 seat-lower like the pirat hat
 			stack.scale(1.425F, 1.425F, 1.425F);
 		}
 		if (this == RatsItemRegistry.FARMER_HAT.get() || this == RatsItemRegistry.FISHERMAN_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			stack.translate(0.0F, 0.4F, 0.0F); // 26.1: +0.5 seat-lower like the pirat hat
 			stack.scale(1.425F, 1.425F, 1.425F);
 		}
 		if (this == RatsItemRegistry.PLAGUE_DOCTOR_MASK.get() || this == RatsItemRegistry.BLACK_DEATH_MASK.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(15.0F));
+			stack.rotate(Axis.XN.rotationDegrees(15.0F));
 			stack.translate(0.0F, 0.4F, 0.0F); // 26.1: +0.5 seat-lower like the pirat hat
 			stack.scale(1.5F, 1.2F, 1.5F);
 		}
@@ -113,7 +113,7 @@ public class HatItem extends Item {
 			stack.scale(1.425F, 1.425F, 1.425F);
 		}
 		if (this == RatsItemRegistry.TOP_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			// 26.1: unlike the other hats, the top hat's flattened pivot (y=-13) sat it LOWER, so the
 			// uniform +0.5 reseat buried it in the skull — keep the legacy offset instead.
 			stack.translate(0.0F, -0.125F, 0.0F);
@@ -125,17 +125,17 @@ public class HatItem extends Item {
 			stack.translate(0.0F, 1.5F, 0.0F);
 		}
 		if (this == RatsItemRegistry.SANTA_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			stack.translate(0.0F, 0.5F, 0.1F); // 26.1: +0.5 seat-lower like the pirat hat
 			stack.scale(1.25F, 1.25F, 1.25F);
 		}
 		if (this == RatlantisItemRegistry.MILITARY_HAT.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			stack.translate(0.0F, 0.4F, 0.0F); // 26.1: +0.5 seat-lower like the pirat hat
 			stack.scale(1.425F, 1.425F, 1.425F);
 		}
 		if (this == RatsItemRegistry.RAT_KING_CROWN.get()) {
-			stack.mulPose(Axis.XN.rotationDegrees(5.0F));
+			stack.rotate(Axis.XN.rotationDegrees(5.0F));
 			stack.translate(0.0F, 0.45F, 0.0F); // 26.1: +0.5 seat-lower like the pirat hat
 			stack.scale(1.25F, 1.25F, 1.25F);
 		}

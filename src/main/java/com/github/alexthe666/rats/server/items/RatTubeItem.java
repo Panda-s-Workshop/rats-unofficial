@@ -2,7 +2,7 @@ package com.github.alexthe666.rats.server.items;
 
 import com.github.alexthe666.rats.registry.RatsBlockRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

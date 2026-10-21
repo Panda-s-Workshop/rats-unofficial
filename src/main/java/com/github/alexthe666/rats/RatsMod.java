@@ -26,7 +26,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.behavior.GiveGiftToHero;
 import net.minecraft.world.entity.raid.Raid;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.gamerules.GameRule;
@@ -34,8 +33,6 @@ import net.minecraft.world.level.gamerules.GameRuleCategory;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -62,6 +59,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.Compostable;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 
 @Mod(RatsMod.MODID)
 public class RatsMod {
@@ -114,7 +118,8 @@ public class RatsMod {
 	public RatsMod(IEventBus bus, net.neoforged.fml.ModContainer container) {
 		ICEANDFIRE_LOADED = ModList.get().isLoaded("iceandfire");
 		container.registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
-		container.registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
+		// 26.3: FML renamed COMMON to LOCAL (loaded on each side, not synced), which is what COMMON was.
+		container.registerConfig(ModConfig.Type.LOCAL, ConfigHolder.SERVER_SPEC);
 		//melk
 		NeoForgeMod.enableMilkFluid();
 
@@ -152,6 +157,7 @@ public class RatsMod {
 		com.github.alexthe666.rats.server.capability.SelectedRat.ATTACHMENTS.register(bus);
 		bus.addListener(this::reloadConfigs);
 		bus.addListener(this::setup);
+		bus.addListener(this::setCompostables);
 		NeoForge.EVENT_BUS.addListener(this::addPetShops);
 		bus.addListener(this::addRatlantisDatapack);
 	}
@@ -188,29 +194,37 @@ public class RatsMod {
 			// 26.1: CauldronInteraction.DYED_ITEM was removed (dyed-item washing is component-driven);
 			// party hat washing is handled by the vanilla dyed-item path when the component is present.
 
-			FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
-			pot.addPlant(RatlantisBlockRegistry.RATGLOVE_FLOWER.getId(), RatlantisBlockRegistry.POTTED_RATGLOVE_FLOWER);
-			pot.addPlant(RatlantisBlockRegistry.PIRAT_SAPLING.getId(), RatlantisBlockRegistry.POTTED_PIRAT_SAPLING);
+			// 26.3: NeoForge fills the flower pot table from every registered FlowerPotBlock with an empty pot,
+			// so the potted ratglove and pirat sapling no longer need FlowerPotBlock#addPlant.
 
-			ComposterBlock.add(0.3F, RatsItemRegistry.RAT_NUGGET.get());
-			ComposterBlock.add(0.3F, RatlantisBlockRegistry.PIRAT_SAPLING.get());
-			ComposterBlock.add(0.3F, RatlantisBlockRegistry.PIRAT_LEAVES.get());
-			ComposterBlock.add(0.5F, RatsItemRegistry.CONTAMINATED_FOOD.get());
-			ComposterBlock.add(0.65F, RatlantisBlockRegistry.RATGLOVE_FLOWER.get());
-			ComposterBlock.add(0.65F, RatlantisItemRegistry.RATGLOVE_PETALS.get());
-			ComposterBlock.add(0.85F, RatsItemRegistry.POTATO_PANCAKE.get());
-			ComposterBlock.add(0.85F, RatsItemRegistry.HERB_BUNDLE.get());
-			ComposterBlock.add(1.0F, RatsItemRegistry.CONFIT_BYALDI.get());
-			ComposterBlock.add(1.0F, RatsItemRegistry.POTATO_KNISHES.get());
-
-			AxeItem.STRIPPABLES = Maps.newHashMap(AxeItem.STRIPPABLES);
-			AxeItem.STRIPPABLES.put(RatlantisBlockRegistry.PIRAT_LOG.get(), RatlantisBlockRegistry.STRIPPED_PIRAT_LOG.get());
-			AxeItem.STRIPPABLES.put(RatlantisBlockRegistry.PIRAT_WOOD.get(), RatlantisBlockRegistry.STRIPPED_PIRAT_WOOD.get());
+			// 26.3: compost chances are the minecraft:compostable item component (see setCompostables below),
+			// and axe stripping is the minecraft:block_transformer registry, extended through the
+			// neoforge:transformables data map (data/neoforge/data_maps/block/transformables.json).
 		});
 		//wooooo caches ftw
 		if (RATLANTIS_ITEMS.isEmpty()) {
 			RatlantisItemRegistry.ITEMS.getEntries().forEach(item -> RATLANTIS_ITEMS.add(item.get()));
 		}
+	}
+
+	// 26.3: ComposterBlock.add is gone; compost chances are the minecraft:compostable component, whose
+	// layer providers are the vanilla compostable/* context int providers (low 30%, low_medium 50%,
+	// medium 65%, medium_high 85%, always_add_one 100%).
+	private void setCompostables(ModifyDefaultComponentsEvent event) {
+		compostable(event, RatsItemRegistry.RAT_NUGGET.get(), ContextIntProviders.COMPOSTABLE_LOW);
+		compostable(event, RatlantisBlockRegistry.PIRAT_SAPLING.get(), ContextIntProviders.COMPOSTABLE_LOW);
+		compostable(event, RatlantisBlockRegistry.PIRAT_LEAVES.get(), ContextIntProviders.COMPOSTABLE_LOW);
+		compostable(event, RatsItemRegistry.CONTAMINATED_FOOD.get(), ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+		compostable(event, RatlantisBlockRegistry.RATGLOVE_FLOWER.get(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+		compostable(event, RatlantisItemRegistry.RATGLOVE_PETALS.get(), ContextIntProviders.COMPOSTABLE_MEDIUM);
+		compostable(event, RatsItemRegistry.POTATO_PANCAKE.get(), ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+		compostable(event, RatsItemRegistry.HERB_BUNDLE.get(), ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+		compostable(event, RatsItemRegistry.CONFIT_BYALDI.get(), ContextIntProviders.COMPOSTABLE_ALWAYS_ADD_ONE);
+		compostable(event, RatsItemRegistry.POTATO_KNISHES.get(), ContextIntProviders.COMPOSTABLE_ALWAYS_ADD_ONE);
+	}
+
+	private static void compostable(ModifyDefaultComponentsEvent event, ItemLike item, ResourceKey<ContextIntProvider> layers) {
+		event.modify(item, (components, context, it) -> components.set(DataComponents.COMPOSTABLE, new Compostable(layers)));
 	}
 
 	//code take from TelepathicGrunt's gist: https://gist.github.com/TelepathicGrunt/4fdbc445ebcbcbeb43ac748f4b18f342
@@ -275,7 +289,7 @@ public class RatsMod {
 			for (var entry : BuiltInRegistries.ENTITY_TYPE.entrySet()) {
 				try {
 					Entity entity = entry.getValue().create(level, net.minecraft.world.entity.EntitySpawnReason.LOAD);
-					if (entry.getValue() == EntityType.PLAYER || entity instanceof Mob) {
+					if (entry.getValue() == EntityTypes.PLAYER || entity instanceof Mob) {
 						unsortedCache.add(Pair.of(entry.getKey().identifier().toString(), entry.getValue().getDescription()));
 					}
 				} catch (NullPointerException e) {

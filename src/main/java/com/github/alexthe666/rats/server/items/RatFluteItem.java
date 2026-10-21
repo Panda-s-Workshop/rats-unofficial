@@ -28,6 +28,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
+import net.minecraft.world.item.component.SwingAnimation;
 
 public class RatFluteItem extends Item {
 
@@ -70,7 +71,7 @@ public class RatFluteItem extends Item {
 					}
 				}
 			}
-			player.swing(hand);
+			player.swing(hand, SwingAnimation.DEFAULT, false);
 			player.sendOverlayMessage(Component.translatable(RatsLangConstants.RAT_FLUTE_COUNT, ratCount).withStyle(ChatFormatting.GRAY));
 			level.playSound(player, player.blockPosition(), RatsSoundRegistry.getFluteSound(), SoundSource.NEUTRAL, 1, 1.25F);
 		}

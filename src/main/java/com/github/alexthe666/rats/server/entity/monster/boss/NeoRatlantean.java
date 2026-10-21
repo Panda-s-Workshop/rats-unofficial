@@ -52,6 +52,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import net.minecraft.world.entity.EntityTypes;
 
 public class NeoRatlantean extends Monster {
 
@@ -190,12 +191,12 @@ public class NeoRatlantean extends Monster {
 			if (RatConfig.neoratlanteanSummonFakeLightning && this.attackSelection == 1 && this.summonCooldown == 0) {
 				int bounds = 20;
 				if (!this.level().isClientSide()) {
-					LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(this.level(), EntitySpawnReason.TRIGGERED);
+					LightningBolt bolt = EntityTypes.LIGHTNING_BOLT.create(this.level(), EntitySpawnReason.TRIGGERED);
 					bolt.snapTo(entity.position());
 					bolt.setVisualOnly(true);
 					this.level().addFreshEntity(bolt);
 					for (int i = 0; i < this.getRandom().nextInt(3) + 2; i++) {
-						LightningBolt boltAgain = EntityType.LIGHTNING_BOLT.create(this.level(), EntitySpawnReason.TRIGGERED);
+						LightningBolt boltAgain = EntityTypes.LIGHTNING_BOLT.create(this.level(), EntitySpawnReason.TRIGGERED);
 						boltAgain.snapTo(new Vec3(entity.getX() + this.getRandom().nextInt(bounds * 2) - bounds, entity.getY(), entity.getZ() + this.getRandom().nextInt(bounds * 2) - bounds));
 						boltAgain.setVisualOnly(true);
 						this.level().addFreshEntity(boltAgain);

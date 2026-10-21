@@ -161,7 +161,7 @@ public class LaserPortal extends Entity {
 	}
 
 	public PushReaction getPistonPushReaction() {
-		return PushReaction.IGNORE;
+		return PushReaction.IGNORE_ENTITY;
 	}
 
 	@Override

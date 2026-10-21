@@ -80,9 +80,9 @@ public class ChristmasRatUpgradeItem extends BaseRatUpgradeItem implements TickR
 	public void renderHeldItem(EntityRendererProvider.Context context, TamedRat rat, RatModel<?> model, PoseStack stack, SubmitNodeCollector collector, int light, float ageInTicks) {
 		stack.pushPose();
 		this.translateToHand(model, false, stack);
-		stack.mulPose(Axis.ZP.rotationDegrees(-10.0F));
-		stack.mulPose(Axis.YP.rotationDegrees(1.0F));
-		stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+		stack.rotate(Axis.ZP.rotationDegrees(-10.0F));
+		stack.rotate(Axis.YP.rotationDegrees(1.0F));
+		stack.rotate(Axis.XP.rotationDegrees(90.0F));
 		stack.pushPose();
 		stack.translate(-0.025F, -0.2F, -0.05F);
 		stack.scale(0.35F, 0.35F, 0.35F);

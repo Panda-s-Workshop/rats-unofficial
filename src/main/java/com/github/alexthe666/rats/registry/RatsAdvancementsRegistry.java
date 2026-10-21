@@ -2,7 +2,7 @@ package com.github.alexthe666.rats.registry;
 
 import com.github.alexthe666.rats.RatsMod;
 import com.github.alexthe666.rats.server.advancements.BlackDeathSummonedTrigger;
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;

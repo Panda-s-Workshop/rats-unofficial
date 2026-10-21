@@ -70,7 +70,7 @@ public class PiratBoat extends Mob {
 		// itself is decorative-only and the banner is purely visual on the boat, so we ship a
 		// solid-black banner here; restoring the custom layered pattern would require a registered
 		// BannerPattern entry in worldgen-style data which isn't worth the complexity for a flag.
-		return new ItemStack(Items.BLACK_BANNER);
+		return new ItemStack(Items.BANNER.pick(net.minecraft.world.item.DyeColor.BLACK));
 	}
 
 	@Override

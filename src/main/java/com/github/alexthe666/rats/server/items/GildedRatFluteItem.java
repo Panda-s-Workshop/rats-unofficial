@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.item.component.SwingAnimation;
 
 public class GildedRatFluteItem extends LoreTagItem {
 
@@ -49,7 +50,7 @@ public class GildedRatFluteItem extends LoreTagItem {
 			level.addFreshEntity(ratShot);
 		}
 		stack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-		player.swing(hand);
+		player.swing(hand, SwingAnimation.DEFAULT, false);
 		player.getCooldowns().addCooldown(stack, 10);
 		level.playSound(player, player.blockPosition(), RatsSoundRegistry.getFluteSound(), SoundSource.PLAYERS, 0.5F, 0.75F);
 		return InteractionResult.SUCCESS;
