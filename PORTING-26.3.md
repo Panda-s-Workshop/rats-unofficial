@@ -64,7 +64,9 @@ Nothing was stubbed out. These are the places where behaviour isn't byte-for-byt
 | Trim palettes | 26.3 reads `textures/palettes/trim/` | Moved there. The item trim permutations live in the items atlas, keyed on `minecraft:trim_base` |
 | Crafting table and tamed rat capabilities | TODOs in 26.1 | Exposed again (`Capabilities.Item.BLOCK`, with the result slot below; `Capabilities.Item.ENTITY`), as in the 21.x port |
 | Auto Curdler hand interaction | `IFluidHandlerItem` is gone | Same result through `ItemAccess` and `ResourceHandlerUtil.move`. It no longer loses milk when the tank only partly fits |
+| Ore nuggets in the creative tab | `getOreNuggets` deduplicated with `List.contains`, but `ItemStack` has no `equals()`, and 26.3's tab builder throws on a duplicate stack | Compared by item and components; the Rats tab builds again (found by ZP5's `creative_tabs_build` GameTest) |
 | `blocks_motion` | `blocksMotion()` is gone | The 47 Rats blocks that 26.1 treated as solid are in `minecraft:blocks_motion_no_leaves` |
+| `Ratlantis Datapack Enabled by Default` | Inherited from the 1.21.1 community port, whose first commit changed it to `true` (upstream 1.20 ships `false`) | New worlds have Ratlantis on unless the config says otherwise. Left as the base has it; packs that want upstream's behaviour set it to `false` |
 | Dead tags | `minecraft:snow_golem_melts` and `without_patrol_spawns` are now biome attributes; `dead_bush_may_place_on`, `c:tools/bows` and `#c:shears` were renamed | Converted, so the Rats entries take effect again |
 
 ## Changes by area
