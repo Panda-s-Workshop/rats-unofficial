@@ -46,6 +46,9 @@ public class RatsRenderType {
 				.useOverlay()
 				.setTextureTransform(transform)
 				.setOutline(RenderSetup.OutlineProperty.AFFECTS_OUTLINE)
+				// 26.3: blended model submits go to the translucent phase unless forced solid; vanilla's overlay
+				// glints are forced solid so they draw straight over the model beneath them, as before.
+				.withForcedSolidModelPhase()
 				.createRenderSetup();
 		return RenderType.create(name, setup);
 	}
