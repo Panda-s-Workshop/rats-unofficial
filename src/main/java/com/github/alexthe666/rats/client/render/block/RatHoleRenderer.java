@@ -157,7 +157,10 @@ public class RatHoleRenderer implements BlockEntityRenderer<RatHoleBlockEntity, 
 			}
 		});
 		if (state.breakProgress != null && state.breakingModel != null) {
-			collector.submitBreakingBlockModel(stack, state.breakingModel, state.breakingSeed, state.breakProgress.progress());
+			// 26.3: the breaking overlay takes the model's parts (collected with the block's seed, as LevelRenderer does).
+			java.util.List<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart> parts = new java.util.ArrayList<>();
+			state.breakingModel.collectParts(net.minecraft.util.RandomSource.create(state.breakingSeed), parts);
+			collector.submitBreakingBlockModel(stack, parts, state.breakProgress.progress(), state.breakingModel.hasMaterialFlag(1));
 		}
 		stack.popPose();
 	}

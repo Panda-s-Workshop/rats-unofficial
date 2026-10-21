@@ -28,7 +28,9 @@ import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.client.ClientHooks;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -91,16 +93,19 @@ public class TamedRatRenderer extends AbstractRatRenderer<TamedRat> {
 			boolean hasName = this.shouldShowName(entity, state.distanceToCameraSq);
 			stack.pushPose();
 			stack.translate(0.0F, hasName ? 1.3F : 1.05F, 0.0F);
-			stack.mulPose(camera.orientation);
+			stack.rotate(camera.orientation);
 			stack.scale(0.25F, 0.25F, 0.25F);
-			stack.mulPose(Axis.YP.rotationDegrees(180));
-			stack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(state.ageInTicks / 5) * 20));
-			Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(entity, new ItemStack(Items.FISHING_ROD), ItemDisplayContext.GUI, stack, collector, state.lightCoords);
+			stack.rotate(Axis.YP.rotationDegrees(180));
+			stack.rotate(Axis.ZP.rotationDegrees(Mth.sin(state.ageInTicks / 5) * 20));
+			// 26.3: ItemInHandRenderer is gone; resolve the item's render state and submit it directly.
+			ItemStackRenderState rodState = new ItemStackRenderState();
+			Minecraft.getInstance().getItemModelResolver().updateForLiving(rodState, new ItemStack(Items.FISHING_ROD), ItemDisplayContext.GUI, entity);
+			rodState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 			stack.popPose();
 
 			stack.pushPose();
 			stack.translate(0.0F, entity.getBbHeight() + 0.5F, 0.0F);
-			stack.mulPose(camera.orientation);
+			stack.rotate(camera.orientation);
 			stack.scale(-0.025F, -0.025F, 0.025F);
 			String dots = FISHING_PROGRESS[(int) (Util.getMillis() / 300L % (long) FISHING_PROGRESS.length)];
 			collector.submitText(stack, -this.getFont().width(dots) / 2.0F, hasName ? -10 : 0, Component.literal(dots).getVisualOrderText(), false, Font.DisplayMode.NORMAL, 15728880, 0xFFFFFFFF, 0, 0);
@@ -112,14 +117,15 @@ public class TamedRatRenderer extends AbstractRatRenderer<TamedRat> {
 	}
 
 	protected void renderAdditionalInfo(TamedRat entity, LivingEntityRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera, int light) {
-		if (ClientHooks.isNameplateInRenderDistance(entity, state.distanceToCameraSq)) {
+		// 26.3: NeoForge's isNameplateInRenderDistance is gone; vanilla reads the name tag distance attribute.
+		if (state.distanceToCameraSq < Mth.square(entity.getAttributeValue(Attributes.NAME_TAG_DISTANCE))) {
 			// 1.21: Entity.getNameTagOffsetY was removed in favour of EntityAttachments.NAME_TAG.
 			// We compute the nameplate Y by hand here (BbHeight + small offset) so the additional rat
 			// info (RF / status text) layers above the rat's head consistently across baby/adult sizes.
 			float f = entity.getBbHeight() + 0.5F;
 			stack.pushPose();
 			stack.translate(0.0F, f, 0.0F);
-			stack.mulPose(camera.orientation);
+			stack.rotate(camera.orientation);
 			stack.scale(-0.025F, -0.025F, 0.025F);
 			float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
 			int j = (int) (f1 * 255.0F) << 24;

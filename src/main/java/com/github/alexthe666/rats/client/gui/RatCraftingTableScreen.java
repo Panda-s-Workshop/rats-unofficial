@@ -127,7 +127,7 @@ public class RatCraftingTableScreen extends AbstractContainerScreen<RatCraftingT
 		// 26.1: renderWidget(GuiGraphics, ...) became extractContents(GuiGraphicsExtractor, ...); the visible check is handled by AbstractWidget.
 		@Override
 		protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
-			if (Minecraft.getInstance().screen instanceof RatCraftingTableScreen table && !table.shouldRenderButtons())
+			if (Minecraft.getInstance().gui.screen() instanceof RatCraftingTableScreen table && !table.shouldRenderButtons())
 				return;
 			boolean hovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
 

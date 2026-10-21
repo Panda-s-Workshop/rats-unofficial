@@ -66,8 +66,8 @@ public class DutchratRenderer extends MobRenderer<Dutchrat, LivingEntityRenderSt
 					stack.pushPose();
 					((FlyingDutchratModel<?>) this.getParentModel().citadel()).translateToHand(HumanoidArm.RIGHT, stack);
 					// [VanillaCopy] of the old ItemInHandLayer hand transform.
-					stack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-					stack.mulPose(Axis.YP.rotationDegrees(180.0F));
+					stack.rotate(Axis.XP.rotationDegrees(-90.0F));
+					stack.rotate(Axis.YP.rotationDegrees(180.0F));
 					stack.translate(1.0F / 16.0F, 0.125F, -0.625F);
 					// 26.1: ItemInHandRenderer/ItemRenderer.renderStatic are gone; items render through ItemStackRenderState.
 					ItemStackRenderState swordState = new ItemStackRenderState();

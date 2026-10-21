@@ -47,7 +47,7 @@ public class GlowingOverlayLayer<T extends LivingEntity> extends RenderLayer<Liv
 			automaton.drillArm2.translateAndRotate(stack);
 			automaton.drilArm3.translateAndRotate(stack);
 			automaton.blade.translateAndRotate(stack);
-			stack.mulPose(Axis.YP.rotationDegrees(90));
+			stack.rotate(Axis.YP.rotationDegrees(90));
 
 			// 26.1: ItemRenderer.renderStatic is gone; items render through ItemStackRenderState.
 			ItemStackRenderState sawblade = new ItemStackRenderState();

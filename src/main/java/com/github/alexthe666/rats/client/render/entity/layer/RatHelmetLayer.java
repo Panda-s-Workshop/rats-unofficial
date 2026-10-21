@@ -1,5 +1,6 @@
 package com.github.alexthe666.rats.client.render.entity.layer;
 
+import com.github.alexthe666.rats.client.render.RatsRenderType;
 import com.github.alexthe666.rats.client.model.entity.AbstractRatModel;
 import com.github.alexthe666.rats.client.render.RatsClientKeys;
 import com.github.alexthe666.rats.client.render.RatsEntityModelBridge;
@@ -121,7 +122,7 @@ public class RatHelmetLayer<T extends AbstractRat> extends RenderLayer<LivingEnt
 					}
 					submitArmorModel(collector, stack, armorModel, RenderTypes.armorCutoutNoCull(texture), light, tint);
 					if (itemstack.hasFoil()) {
-						submitArmorModel(collector, stack, armorModel, RenderTypes.armorEntityGlint(), light, -1);
+						submitArmorModel(collector, stack, armorModel, RatsRenderType.armorEntityGlint(), light, -1);
 					}
 				}
 			} else {
@@ -129,18 +130,18 @@ public class RatHelmetLayer<T extends AbstractRat> extends RenderLayer<LivingEnt
 				if (!itemstack.is(RatsItemRegistry.PARTY_HAT.get())) {
 					this.ratModel().translateToHead(stack);
 					stack.translate(0, 0.025F, -0.15F);
-					stack.mulPose(Axis.XP.rotationDegrees(180));
-					stack.mulPose(Axis.YP.rotationDegrees(180));
+					stack.rotate(Axis.XP.rotationDegrees(180));
+					stack.rotate(Axis.YP.rotationDegrees(180));
 					stack.scale(0.5F, 0.5F, 0.5F);
 					if (itemstack.is(RatlantisBlockRegistry.MARBLED_CHEESE_RAT_HEAD.get().asItem())) {
 						stack.translate(0, -0.1F, 0.1F);
-						stack.mulPose(Axis.XP.rotationDegrees(15));
+						stack.rotate(Axis.XP.rotationDegrees(15));
 						if (rat.isBaby()) {
 							stack.scale(0.4F, 0.4F, 0.4F);
 							stack.translate(0.0D, 0.25D, 0.0D);
 						}
 					} else if (itemstack.is(net.minecraft.tags.ItemTags.SKULLS) && BuiltInRegistries.ITEM.getKey(itemstack.getItem()).getNamespace().equals("minecraft")) {
-						stack.mulPose(Axis.YP.rotationDegrees(180));
+						stack.rotate(Axis.YP.rotationDegrees(180));
 						stack.translate(0.0D, 0.55D, -0.0D);
 						stack.scale(2.0F, 2.0F, 2.0F);
 						if (rat.isBaby()) {
@@ -162,9 +163,9 @@ public class RatHelmetLayer<T extends AbstractRat> extends RenderLayer<LivingEnt
 		if (banner.getItem() instanceof BannerItem) {
 			this.ratModel().translateToBody(stack);
 			stack.translate(0.0D, -0.5D, -0.2D);
-			stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+			stack.rotate(Axis.ZP.rotationDegrees(180.0F));
 			float sitProgress = rat.sitProgress / 20.0F;
-			stack.mulPose(Axis.XP.rotationDegrees(sitProgress * -40.0F));
+			stack.rotate(Axis.XP.rotationDegrees(sitProgress * -40.0F));
 			stack.translate(0.0D, 0.0D, -sitProgress * 0.04F);
 			stack.scale(1.7F, 1.7F, 1.7F);
 			this.submitItem(banner, ItemDisplayContext.FIXED, stack, collector, light, state);

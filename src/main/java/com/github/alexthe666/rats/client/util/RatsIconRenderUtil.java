@@ -26,7 +26,7 @@ public class RatsIconRenderUtil {
 		if (renderPos != null && !renderPos.equals(BlockPos.ZERO)) {
 			stack.pushPose();
 			stack.translate(renderPos.getX() + 0.5D - cameraPos.x(), renderPos.getY() + bob - cameraPos.y(), renderPos.getZ() + 0.5D - cameraPos.z());
-			stack.mulPose(cameraOrientation);
+			stack.rotate(cameraOrientation);
 			collector.submitCustomGeometry(stack, RatsRenderType.getGlowingTranslucent(icon), (pose, consumer) -> {
 				vertex(consumer, pose, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F);
 				vertex(consumer, pose, -0.5F, 0.5F, 0.0F, 1.0F, 0.0F);

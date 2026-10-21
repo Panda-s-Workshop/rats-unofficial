@@ -40,9 +40,9 @@ public final class ClientPacketHandlers {
 			SelectedRat.clear(mc.player);
 		} else if (mc.player.level().getEntity(packet.entityId()) instanceof TamedRat rat && packet.openGUI()) {
 			switch (packet.staffToOpen()) {
-				case 1 -> mc.setScreen(new RadiusStaffScreen(rat, packet.pos()));
-				case 2 -> mc.setScreen(new PatrolStaffScreen(rat, packet.pos()));
-				default -> mc.setScreen(new CheeseStaffScreen(rat, packet.pos(), Direction.values()[packet.dirOrd()]));
+				case 1 -> mc.gui.setScreen(new RadiusStaffScreen(rat, packet.pos()));
+				case 2 -> mc.gui.setScreen(new PatrolStaffScreen(rat, packet.pos()));
+				default -> mc.gui.setScreen(new CheeseStaffScreen(rat, packet.pos(), Direction.values()[packet.dirOrd()]));
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public final class ClientPacketHandlers {
 				menu = new RatMenu(packet.containerId(), new SimpleContainer(6), localplayer.getInventory());
 				localplayer.containerMenu = menu;
 			}
-			mc.setScreen(new RatScreen(menu, localplayer.getInventory(), rat));
+			mc.gui.setScreen(new RatScreen(menu, localplayer.getInventory(), rat));
 		}
 	}
 
@@ -92,7 +92,7 @@ public final class ClientPacketHandlers {
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.level != null && mc.level.getEntity(packet.id()) instanceof TamedRat rat) {
 			mc.getSoundManager().queueTickingSound(new RatRecordSoundInstance(rat, packet.record().value()));
-			mc.gui.setNowPlaying(packet.record().value().getName(new net.minecraft.world.item.ItemStack(packet.record().value())));
+			mc.gui.hud.setNowPlaying(packet.record().value().getName(new net.minecraft.world.item.ItemStack(packet.record().value())));
 		}
 	}
 

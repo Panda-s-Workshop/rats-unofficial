@@ -73,14 +73,14 @@ public class AutoCurdlerRenderer implements BlockEntityRenderer<AutoCurdlerBlock
 		int overlay = OverlayTexture.NO_OVERLAY;
 		stack.pushPose();
 		stack.translate(0.5D, 1.5D, 0.5D);
-		stack.mulPose(Axis.YP.rotationDegrees(-state.rotation));
-		stack.mulPose(Axis.ZP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(-state.rotation));
+		stack.rotate(Axis.ZP.rotationDegrees(180));
 		stack.pushPose();
 		if (state.fluidSprite != null) {
 			TextureAtlasSprite sprite = state.fluidSprite;
 			int amount = state.fluidAmount;
 			stack.pushPose();
-			stack.mulPose(Axis.XP.rotationDegrees(180));
+			stack.rotate(Axis.XP.rotationDegrees(180));
 			stack.translate(-0.5F, -1.6F, -0.5F);
 			collector.submitCustomGeometry(stack, TEXTURE_BLOCKS, (pose, consumer) ->
 					renderMilk(consumer, pose.pose(), sprite, amount, light, overlay));

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "rats:block/pirat_wall_sign",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "rats:block/pirat_wall_sign",
+      "y": 180
+    },
+    "facing=south": {
       "model": "rats:block/pirat_wall_sign"
+    },
+    "facing=west": {
+      "model": "rats:block/pirat_wall_sign",
+      "y": 90
     }
   }
 }

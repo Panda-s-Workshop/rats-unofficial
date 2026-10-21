@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_0",
+  "textures": {
+    "all": "rats:block/pirat_sign",
+    "particle": "rats:block/pirat_planks"
+  }
+}

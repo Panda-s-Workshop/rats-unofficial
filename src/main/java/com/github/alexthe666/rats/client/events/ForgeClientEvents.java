@@ -19,7 +19,7 @@ import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
@@ -121,14 +121,16 @@ public class ForgeClientEvents {
 		if (!(event.getEntity() instanceof net.minecraft.world.entity.LivingEntity)) return;
 		if (RatConfig.synesthesiaShader) {
 			if (event.getEntity() == Minecraft.getInstance().player) {
-				GameRenderer renderer = Minecraft.getInstance().gameRenderer;
 				boolean active = ((net.minecraft.world.entity.LivingEntity) event.getEntity()).hasEffect(RatsEffectRegistry.SYNESTHESIA);
 				try {
-					if (active && renderer.currentPostEffect() == null) {
-						renderer.setPostEffect(SYNESTHESIA);
+					// 26.3: GameRenderer has no single settable post effect any more. Every frame it requests the
+					// local player's active post effects (a list the server normally sends), so the shader joins that list.
+					java.util.List<Identifier> postEffects = Minecraft.getInstance().player.getActivePostEffects();
+					if (active && !postEffects.contains(SYNESTHESIA)) {
+						postEffects.add(SYNESTHESIA);
 					}
-					if (!active && SYNESTHESIA.equals(renderer.currentPostEffect())) {
-						renderer.clearPostEffect();
+					if (!active) {
+						postEffects.remove(SYNESTHESIA);
 					}
 				} catch (Exception e) {
 					RatsMod.LOGGER.warn("Game tried to crash when applying shader");
@@ -190,14 +192,15 @@ public class ForgeClientEvents {
 		int height = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 		int leftHeight = 39;
 		int health = Mth.ceil(player.getHealth());
-		Gui gui = Minecraft.getInstance().gui;
+		// 26.3: the in-game HUD is Hud (Minecraft.gui is now the screen/overlay manager).
+		Hud gui = Minecraft.getInstance().gui.hud;
 		boolean highlight = gui.healthBlinkTime > (long) gui.getGuiTicks() && (gui.healthBlinkTime - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
 
 		long j = Util.getMillis();
-		if (health < gui.lastHealth && player.invulnerableTime > 0) {
+		if (health < gui.lastHealth && player.damageCooldownTime > 0) {
 			gui.lastHealthTime = j;
 			gui.healthBlinkTime = gui.getGuiTicks() + 20;
-		} else if (health > gui.lastHealth && player.invulnerableTime > 0) {
+		} else if (health > gui.lastHealth && player.damageCooldownTime > 0) {
 			gui.lastHealthTime = j;
 			gui.healthBlinkTime = gui.getGuiTicks() + 10;
 		}
@@ -303,13 +306,13 @@ public class ForgeClientEvents {
 				float scale = 0.4F;
 				float rotation = Mth.wrapDegrees((tick * 8) % 360.0F + offsetRot);
 				stack.pushPose();
-				stack.mulPose(Axis.YP.rotationDegrees(rotation));
+				stack.rotate(Axis.YP.rotationDegrees(rotation));
 				stack.translate(0.0D, player.getBbHeight() + 0.5D + bob, player.getBbWidth() + 0.5F);
 				stack.pushPose();
-				stack.mulPose(Axis.YP.rotationDegrees(90));
-				stack.mulPose(Axis.XP.rotationDegrees(75.0F));
+				stack.rotate(Axis.YP.rotationDegrees(90));
+				stack.rotate(Axis.XP.rotationDegrees(75.0F));
 				stack.scale(scale, scale, scale);
-				stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+				stack.rotate(Axis.XP.rotationDegrees(90.0F));
 				float f = (player.tickCount + partialTick) * 0.5F;
 				RAT_MODEL.setupAnim(player, f, 1, player.tickCount + partialTick, partialTick, 0);
 				// 26.1: deferred submit replaces direct buffer access on the living-render event.

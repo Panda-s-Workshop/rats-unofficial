@@ -80,25 +80,25 @@ public class DecoratedRatCageRenderer implements BlockEntityRenderer<DecoratedRa
 		int overlay = OverlayTexture.NO_OVERLAY;
 		stack.pushPose();
 		stack.translate(0.5D, 1.5D, 0.5D);
-		stack.mulPose(Axis.ZP.rotationDegrees(180));
-		stack.mulPose(Axis.YP.rotationDegrees(state.rotation));
+		stack.rotate(Axis.ZP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(state.rotation));
 		ItemStack containedItem = state.containedItem;
 		if (containedItem.getItem() instanceof RatIglooItem iglooItem) {
 			DyeColor color = iglooItem.color;
-			collector.submitModel(this.igloo, Unit.INSTANCE, stack, TEXTURE_RAT_IGLOO, light, overlay, color.getTextureDiffuseColor() | 0xFF000000, null, 0, state.breakProgress);
+			RatsRenderType.submitModel(collector, this.igloo, Unit.INSTANCE, stack, TEXTURE_RAT_IGLOO, light, overlay, color.getTextureDiffuseColor() | 0xFF000000, state.breakProgress);
 		}
 
 		if (containedItem.getItem() instanceof RatHammockItem hammockItem) {
 			DyeColor color = hammockItem.color;
-			collector.submitModel(this.hammock, Unit.INSTANCE, stack, TEXTURE_RAT_HAMMOCK, light, overlay, color.getTextureDiffuseColor() | 0xFF000000, null, 0, state.breakProgress);
+			RatsRenderType.submitModel(collector, this.hammock, Unit.INSTANCE, stack, TEXTURE_RAT_HAMMOCK, light, overlay, color.getTextureDiffuseColor() | 0xFF000000, state.breakProgress);
 		}
 
 		if (containedItem.is(RatsItemRegistry.RAT_WATER_BOTTLE.get())) {
-			collector.submitModel(this.water_bottle, Unit.INSTANCE, stack, TEXTURE_RAT_WATER_BOTTLE, light, overlay, 0xFFFFFFFF, null, 0, state.breakProgress);
+			RatsRenderType.submitModel(collector, this.water_bottle, Unit.INSTANCE, stack, TEXTURE_RAT_WATER_BOTTLE, light, overlay, 0xFFFFFFFF, state.breakProgress);
 		}
 
 		if (containedItem.is(RatsItemRegistry.RAT_SEED_BOWL.get())) {
-			collector.submitModel(this.seed_bowl, Unit.INSTANCE, stack, TEXTURE_RAT_SEED_BOWL, light, overlay, 0xFFFFFFFF, null, 0, state.breakProgress);
+			RatsRenderType.submitModel(collector, this.seed_bowl, Unit.INSTANCE, stack, TEXTURE_RAT_SEED_BOWL, light, overlay, 0xFFFFFFFF, state.breakProgress);
 		}
 
 		if (containedItem.is(RatsItemRegistry.RAT_WHEEL.get())) {

@@ -44,6 +44,6 @@ public class DutchratBellRenderer implements BlockEntityRenderer<DutchratBellBlo
 		// vanilla BellModel reproduces the 1.20 shake math; tint carries the old 50% alpha
 		BellModel.State modelState = new BellModel.State(state.ticks, state.shakeDirection);
 		this.model.setupAnim(modelState);
-		collector.submitModel(this.model, modelState, poseStack, TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY, 0x80FFFFFF, null, 0, state.breakProgress);
+		RatsRenderType.submitModel(collector, this.model, modelState, poseStack, TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY, 0x80FFFFFF, state.breakProgress);
 	}
 }

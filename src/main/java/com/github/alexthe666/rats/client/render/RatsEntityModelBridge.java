@@ -36,11 +36,6 @@ public final class RatsEntityModelBridge<E extends LivingEntity> extends EntityM
 		this.citadel.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, color);
 	}
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay) {
-		this.citadel.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, -1);
-	}
-
 	/** Citadel mesh draw for layers and custom submit callbacks. */
 	public void renderCitadelToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
 		this.citadel.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, color);

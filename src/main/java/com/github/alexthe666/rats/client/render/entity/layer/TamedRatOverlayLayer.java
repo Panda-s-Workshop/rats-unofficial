@@ -57,7 +57,7 @@ public class TamedRatOverlayLayer extends RenderLayer<LivingEntityRenderState, R
 				if (RatUpgradeUtils.hasUpgrade(rat, RatsItemRegistry.RAT_UPGRADE_GOD.get()) && RatConfig.ratGodGlint) {
 					// 26.1: ItemRenderer.getFoilBuffer is gone; foil is now an extra entityGlint pass over the base draw.
 					this.submitOverlay(stack, collector, state, RenderTypes.entityCutout(this.renderer.getTextureLocation(state)), light, OverlayTexture.NO_OVERLAY, -1);
-					this.submitOverlay(stack, collector, state, RenderTypes.entityGlint(), light, OverlayTexture.NO_OVERLAY, -1);
+					this.submitOverlay(stack, collector, state, RatsRenderType.entityGlint(), light, OverlayTexture.NO_OVERLAY, -1);
 				}
 
 				if (rat.isDyed()) {

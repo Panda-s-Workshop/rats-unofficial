@@ -67,7 +67,7 @@ public class BlackDeathRenderer extends MobRenderer<BlackDeath, HumanoidRenderSt
 
 		@Override
 		public void submit(PoseStack stack, SubmitNodeCollector collector, int light, HumanoidRenderState state, float netHeadYaw, float headPitch) {
-			collector.submitModel(this.getParentModel(), state, stack, GLOW, light, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor, null);
+			collector.submitModel(this.getParentModel(), state, stack, GLOW, light, OverlayTexture.NO_OVERLAY, -1, null, state.outlineColor);
 		}
 	}
 }

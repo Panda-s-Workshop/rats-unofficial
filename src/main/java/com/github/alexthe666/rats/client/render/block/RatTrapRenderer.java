@@ -67,8 +67,8 @@ public class RatTrapRenderer implements BlockEntityRenderer<RatTrapBlockEntity, 
 		stack.pushPose();
 		stack.translate(0.5D, 1.5D, 0.5D);
 
-		stack.mulPose(Axis.XP.rotationDegrees(180));
-		stack.mulPose(Axis.YP.rotationDegrees(state.rotation));
+		stack.rotate(Axis.XP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(state.rotation));
 		MODEL_RAT_TRAP.animateHinge(state.shutProgress);
 		collector.submitCustomGeometry(stack, TEXTURE, (pose, consumer) ->
 				RatsRenderType.withSubmitPose(pose, this.scratch, s ->
@@ -76,8 +76,8 @@ public class RatTrapRenderer implements BlockEntityRenderer<RatTrapBlockEntity, 
 		if (!state.bait.isEmpty()) {
 			stack.scale(0.4F, 0.4F, 0.4F);
 			stack.translate(0, 3.4F, -0.5F);
-			stack.mulPose(Axis.XP.rotationDegrees(90));
-			stack.mulPose(Axis.YP.rotationDegrees(180));
+			stack.rotate(Axis.XP.rotationDegrees(90));
+			stack.rotate(Axis.YP.rotationDegrees(180));
 			state.bait.submit(stack, collector, light, OverlayTexture.NO_OVERLAY, 0);
 		}
 		stack.popPose();

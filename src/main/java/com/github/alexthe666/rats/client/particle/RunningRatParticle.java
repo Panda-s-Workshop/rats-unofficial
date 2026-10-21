@@ -34,7 +34,7 @@ import java.util.Optional;
 public class RunningRatParticle extends Particle {
 
 	// 26.1: ParticleRenderType.CUSTOM is gone, custom-rendered particles use their own type + ParticleGroup
-	public static final ParticleRenderType RUNNING_RAT = new ParticleRenderType("rats_running_rat");
+	public static final ParticleRenderType RUNNING_RAT = new ParticleRenderType("rats_running_rat", "RR");
 
 	private final StaticRatModel<?> model = new StaticRatModel<>();
 	// 26.1: entityCutoutNoCull was removed, entityCutout is now the no-cull variant (pipeline has withCull(false))
@@ -87,7 +87,7 @@ public class RunningRatParticle extends Particle {
 			double d1 = p_107247_;
 			double d2 = p_107248_;
 			if (this.hasPhysics && (p_107246_ != 0.0D || p_107247_ != 0.0D || p_107248_ != 0.0D) && p_107246_ * p_107246_ + p_107247_ * p_107247_ + p_107248_ * p_107248_ < Mth.square(100.0D)) {
-				Vec3 vec3 = Entity.collideBoundingBox(null, new Vec3(p_107246_, p_107247_, p_107248_), this.getBoundingBox(), this.level, List.of());
+				Vec3 vec3 = Entity.collideBoundingBox((Entity) null, new Vec3(p_107246_, p_107247_, p_107248_), this.getBoundingBox(), this.level, List.of());
 				p_107246_ = vec3.x;
 				p_107247_ = vec3.y;
 				p_107248_ = vec3.z;
@@ -115,7 +115,7 @@ public class RunningRatParticle extends Particle {
 
 	// 26.1: replaces the old render(VertexConsumer, Camera, float) override, called from the group render state
 	private void submitRat(SubmitNodeCollector collector, float partialTicks) {
-		Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+		Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
 		Vec3 vec = camera.position();
 		float f = (float) (Mth.lerp(partialTicks, this.xo, this.x) - vec.x());
 		float f1 = (float) (Mth.lerp(partialTicks, this.yo, this.y) - vec.y());
@@ -126,7 +126,7 @@ public class RunningRatParticle extends Particle {
 		posestack.translate(f, f1, f2);
 		posestack.translate(0.0D, 0.95D, 0.0D);
 		posestack.scale(0.6F, -0.6F, -0.6F);
-		this.getYRotD().ifPresent(aFloat -> posestack.mulPose(Axis.YP.rotationDegrees(aFloat)));
+		this.getYRotD().ifPresent(aFloat -> posestack.rotate(Axis.YP.rotationDegrees(aFloat)));
 		this.model.setupAnim(null, Mth.lerp(partialTicks, this.oldAge, this.age) * 0.35F, 1, Mth.lerp(partialTicks, this.oldAge, this.age), partialTicks, 0);
 		int light = this.getLightCoords(partialTicks);
 		collector.submitCustomGeometry(posestack, this.renderType, (pose, vertexconsumer) ->
@@ -155,7 +155,7 @@ public class RunningRatParticle extends Particle {
 		@Override
 		public ParticleGroupRenderState extractRenderState(Frustum frustum, Camera camera, float partialTicks) {
 			List<RunningRatParticle> list = new ArrayList<>();
-			for (RunningRatParticle particle : this.getAll()) {
+			for (RunningRatParticle particle : this.particles) {
 				if (frustum.pointInFrustum(particle.x, particle.y, particle.z)) {
 					list.add(particle);
 				}

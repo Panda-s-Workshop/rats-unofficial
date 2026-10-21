@@ -58,8 +58,8 @@ public class UpgradeCombinerRenderer implements BlockEntityRenderer<UpgradeCombi
 		stack.pushPose();
 		stack.translate(0.5D, 0.0D, 0.5D);
 		stack.translate(0.0F, 3.25F + Mth.sin(state.bobTicks * 0.1F) * 0.1F, 0.0F);
-		stack.mulPose(Axis.YP.rotationDegrees(-state.rotation * (180F / (float) Math.PI) - 90F));
-		stack.mulPose(Axis.ZP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(-state.rotation * (180F / (float) Math.PI) - 90F));
+		stack.rotate(Axis.ZP.rotationDegrees(180));
 		stack.scale(1.5F, 1.5F, 1.5F);
 		collector.submitCustomGeometry(stack, TEXTURE, (pose, consumer) ->
 				RatsRenderType.withSubmitPose(pose, this.scratch, s ->

@@ -1,5 +1,7 @@
 {
+  "parent": "minecraft:block/template_wall_hanging_sign",
   "textures": {
+    "all": "rats:block/pirat_hanging_sign",
     "particle": "rats:block/pirat_planks"
   }
 }

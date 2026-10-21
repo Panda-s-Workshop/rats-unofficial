@@ -68,8 +68,8 @@ public class RatlanteanAutomatonHeadRenderer implements BlockEntityRenderer<Ratl
 		int overlay = OverlayTexture.NO_OVERLAY;
 		stack.pushPose();
 		stack.translate(0.5F, -0.5F, 0.5F);
-		stack.mulPose(Axis.XP.rotationDegrees(180));
-		stack.mulPose(Axis.YP.rotationDegrees(state.rotation));
+		stack.rotate(Axis.XP.rotationDegrees(180));
+		stack.rotate(Axis.YP.rotationDegrees(state.rotation));
 		AUTOMATON_MODEL.setTERotationAngles(state.tickCount);
 		collector.submitCustomGeometry(stack, GOLEM_TEXTURE, (pose, consumer) ->
 				RatsRenderType.withSubmitPose(pose, this.scratch, s ->

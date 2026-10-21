@@ -47,14 +47,14 @@ public class RatHeldItemLayer<T extends AbstractRat> extends RenderLayer<LivingE
 				// 26.1: the model no longer carries a `young` flag; read it off the render state instead.
 				if (state.isBaby) {
 					stack.translate(0.0F, 0.625F, 0.0F);
-					stack.mulPose(Axis.XP.rotationDegrees(20));
+					stack.rotate(Axis.XP.rotationDegrees(20));
 					stack.scale(0.5F, 0.5F, 0.5F);
 				}
 				if (!entity.isHoldingItemInHands()) {
 					model.translateToHead(stack);
-					stack.mulPose(Axis.ZP.rotationDegrees(180));
-					stack.mulPose(Axis.YP.rotationDegrees(180));
-					stack.mulPose(Axis.XP.rotationDegrees(90));
+					stack.rotate(Axis.ZP.rotationDegrees(180));
+					stack.rotate(Axis.YP.rotationDegrees(180));
+					stack.rotate(Axis.XP.rotationDegrees(90));
 					stack.translate(0F, 0.35F, 0.05F);
 					stack.scale(0.5F, 0.5F, 0.5F);
 					this.submitItem(itemstack, entity, ItemDisplayContext.FIXED, stack, collector, light, state);
@@ -67,14 +67,14 @@ public class RatHeldItemLayer<T extends AbstractRat> extends RenderLayer<LivingE
 						this.translateToHand(model, true, stack);
 						stack.translate(-0.125F, -0.15F, -0.2F);
 						if (model3d) {
-							stack.mulPose(Axis.XP.rotationDegrees(110));
-							stack.mulPose(Axis.YP.rotationDegrees(10));
-							stack.mulPose(Axis.ZN.rotationDegrees(3));
+							stack.rotate(Axis.XP.rotationDegrees(110));
+							stack.rotate(Axis.YP.rotationDegrees(10));
+							stack.rotate(Axis.ZN.rotationDegrees(3));
 							stack.translate(0.0F, 0.2F, 0.025F);
 						} else {
-							stack.mulPose(Axis.XP.rotationDegrees(20));
-							stack.mulPose(Axis.YP.rotationDegrees(3));
-							stack.mulPose(Axis.ZP.rotationDegrees(10));
+							stack.rotate(Axis.XP.rotationDegrees(20));
+							stack.rotate(Axis.YP.rotationDegrees(3));
+							stack.rotate(Axis.ZP.rotationDegrees(10));
 							stack.translate(0.0F, -0.025F, 0.09F);
 							stack.scale(0.75F, 0.75F, 0.75F);
 						}
@@ -82,8 +82,8 @@ public class RatHeldItemLayer<T extends AbstractRat> extends RenderLayer<LivingE
 						flag = true;
 					} else {
 						this.translateToHand(model, true, stack);
-						stack.mulPose(Axis.ZP.rotationDegrees(180));
-						stack.mulPose(Axis.XP.rotationDegrees(20));
+						stack.rotate(Axis.ZP.rotationDegrees(180));
+						stack.rotate(Axis.XP.rotationDegrees(20));
 						stack.scale(0.65F, 0.65F, 0.65F);
 						stack.translate(0.0F, -0.075F, -0.2F);
 					}
@@ -93,7 +93,7 @@ public class RatHeldItemLayer<T extends AbstractRat> extends RenderLayer<LivingE
 						RandomSource random = RandomSource.create(itemstack.getItem().hashCode());
 						for (int i = 0; i < itemstack.getCount() / 5; i++) {
 							stack.translate(0.0D, 0.025D, 0.0D);
-							stack.mulPose(Axis.ZP.rotationDegrees(random.nextIntBetweenInclusive(-90, 90)));
+							stack.rotate(Axis.ZP.rotationDegrees(random.nextIntBetweenInclusive(-90, 90)));
 							stack.translate(0.0D, -0.025D, 0.05D);
 							this.submitItem(itemstack, entity, ItemDisplayContext.FIXED, stack, collector, light, state);
 						}
@@ -109,18 +109,18 @@ public class RatHeldItemLayer<T extends AbstractRat> extends RenderLayer<LivingE
 					float wingFold = -45.0F;
 					model.translateToBody(stack);
 					stack.pushPose();
-					stack.mulPose(Axis.ZN.rotationDegrees(wingAngle));
-					stack.mulPose(Axis.YP.rotationDegrees(wingFold));
-					stack.mulPose(Axis.XN.rotationDegrees(90));
+					stack.rotate(Axis.ZN.rotationDegrees(wingAngle));
+					stack.rotate(Axis.YP.rotationDegrees(wingFold));
+					stack.rotate(Axis.XN.rotationDegrees(90));
 					stack.translate(0.2F, 0.0F, -0.15F);
 					this.submitItem(new ItemStack(RatsItemRegistry.FEATHERY_WING.get()), rat, ItemDisplayContext.GROUND, stack, collector, light, state);
 					stack.popPose();
 					stack.pushPose();
 
-					stack.mulPose(Axis.ZP.rotationDegrees(wingAngle));
-					stack.mulPose(Axis.YN.rotationDegrees(wingFold));
-					stack.mulPose(Axis.XN.rotationDegrees(90));
-					stack.mulPose(Axis.YP.rotationDegrees(180));
+					stack.rotate(Axis.ZP.rotationDegrees(wingAngle));
+					stack.rotate(Axis.YN.rotationDegrees(wingFold));
+					stack.rotate(Axis.XN.rotationDegrees(90));
+					stack.rotate(Axis.YP.rotationDegrees(180));
 					stack.translate(0.2F, -0.0F, 0.15F);
 					this.submitItem(new ItemStack(RatsItemRegistry.FEATHERY_WING.get()), rat, ItemDisplayContext.GROUND, stack, collector, light, state);
 					stack.popPose();

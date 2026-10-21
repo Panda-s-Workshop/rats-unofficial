@@ -58,7 +58,7 @@ public class RatKingLayer extends RenderLayer<LivingEntityRenderState, RatsEntit
 		for (int i = 0; i < RatKing.RAT_COUNT; i++) {
 			int deathTime = Math.min(Math.max(0, king.deathTime - i * 5), 5);
 			stack.pushPose();
-			stack.mulPose(Axis.YP.rotationDegrees(i * RatKing.RAT_ANGLE));
+			stack.rotate(Axis.YP.rotationDegrees(i * RatKing.RAT_ANGLE));
 			stack.translate(0, 0.6F + (deathTime * 0.01F), -0.8);
 			stack.pushPose();
 			stack.scale(0.6F, 0.6F, 0.6F);

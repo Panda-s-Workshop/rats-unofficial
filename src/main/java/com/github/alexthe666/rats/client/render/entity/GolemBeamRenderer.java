@@ -28,15 +28,15 @@ public class GolemBeamRenderer extends EntityRenderer<GolemBeam, GolemBeamRender
 	@Override
 	public void submit(GolemBeamRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
 		stack.pushPose();
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot - 90.0F));
-		stack.mulPose(Axis.ZP.rotationDegrees(state.xRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot - 90.0F));
+		stack.rotate(Axis.ZP.rotationDegrees(state.xRot));
 		float f9 = state.shake;
 		if (f9 > 0.0F) {
 			float f10 = -Mth.sin(f9 * 3.0F) * f9;
-			stack.mulPose(Axis.ZP.rotationDegrees(f10));
+			stack.rotate(Axis.ZP.rotationDegrees(f10));
 		}
 
-		stack.mulPose(Axis.XP.rotationDegrees(45.0F));
+		stack.rotate(Axis.XP.rotationDegrees(45.0F));
 		stack.scale(0.05625F, 0.05625F, 0.05625F);
 		stack.translate(-4.0D, 0.0D, 0.0D);
 		collector.submitCustomGeometry(stack, RENDER_TYPE, (pose, consumer) -> {
@@ -52,7 +52,7 @@ public class GolemBeamRenderer extends EntityRenderer<GolemBeam, GolemBeamRender
 
 		// 26.1: custom geometry captures a pose snapshot per submit, so each fin rotation needs its own submit.
 		for (int j = 0; j < 4; ++j) {
-			stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+			stack.rotate(Axis.XP.rotationDegrees(90.0F));
 			collector.submitCustomGeometry(stack, RENDER_TYPE, (pose, consumer) -> {
 				vertex(pose, consumer, -8, -2, 0, 0.0F, 0.0F, 0, 1, 0, 240);
 				vertex(pose, consumer, 8, -2, 0, 0.5F, 0.0F, 0, 1, 0, 240);

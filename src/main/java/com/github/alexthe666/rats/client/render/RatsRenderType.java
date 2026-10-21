@@ -3,11 +3,11 @@ package com.github.alexthe666.rats.client.render;
 import com.github.alexthe666.rats.RatsMod;
 import com.github.alexthe666.rats.client.render.block.RatlantisPortalRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexMultiConsumer;
+import net.minecraft.client.model.Model;
 import net.minecraft.util.Util;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
@@ -46,6 +46,9 @@ public class RatsRenderType {
 				.useOverlay()
 				.setTextureTransform(transform)
 				.setOutline(RenderSetup.OutlineProperty.AFFECTS_OUTLINE)
+				// 26.3: blended model submits go to the translucent phase unless forced solid; vanilla's overlay
+				// glints are forced solid so they draw straight over the model beneath them, as before.
+				.withForcedSolidModelPhase()
 				.createRenderSetup();
 		return RenderType.create(name, setup);
 	}
@@ -133,35 +136,32 @@ public class RatsRenderType {
 		}
 	}
 
-	private static boolean encounteredMultiConsumerError = false;
-
-	public static VertexConsumer createMergedVertexConsumer(VertexConsumer consumer1, VertexConsumer consumer2) {
-		VertexConsumer vertexConsumer = consumer2;
-		if (!encounteredMultiConsumerError) {
-			try {
-				vertexConsumer = VertexMultiConsumer.create(consumer1, consumer2);
-			} catch (Exception e) {
-				RatsMod.LOGGER.warn("Encountered issue mixing two render types together. Likely an issue with a rendering mod. This warning will only display once.");
-				encounteredMultiConsumerError = true;
-			}
-		}
-		return vertexConsumer;
+	/**
+	 * 26.3: {@code RenderTypes.entityGlint()} is gone (glint is now fused into per-texture render types such as
+	 * {@code entitySolidGlint}). Vanilla's patterned-shield glint is the old entity glint (GLINT pipeline, item glint
+	 * texture, entity glint texturing), drawn in the solid model phase so it lands on top of the model below it.
+	 */
+	public static RenderType entityGlint() {
+		return RenderTypes.patternedShieldGlint();
 	}
 
-	/** Replaces removed {@code ItemRenderer#getFoilBuffer} for entity cutouts. */
-	public static VertexConsumer entityFoilBuffer(MultiBufferSource buffer, RenderType base, boolean foil) {
-		if (!foil) {
-			return buffer.getBuffer(base);
-		}
-		return createMergedVertexConsumer(buffer.getBuffer(base), buffer.getBuffer(RenderTypes.entityGlint()));
+	/**
+	 * 26.3: {@code RenderTypes.armorEntityGlint()} is gone. Vanilla's trimmed-armor glint is the old armor entity
+	 * glint (armor glint texture and texturing, view-offset layering), drawn in the solid model phase.
+	 */
+	public static RenderType armorEntityGlint() {
+		return RenderTypes.trimmedArmorGlint();
 	}
 
-	/** Replaces removed {@code ItemRenderer#getArmorFoilBuffer} for armor cutouts. */
-	public static VertexConsumer armorFoilBuffer(MultiBufferSource buffer, RenderType base, boolean foil) {
-		if (!foil) {
-			return buffer.getBuffer(base);
+	/**
+	 * 26.3: {@code submitModel} lost its crumbling-overlay argument; the block-breaking overlay is a separate
+	 * {@code submitCrumblingOverlay} on the next order, as vanilla block entity renderers do.
+	 */
+	public static <S> void submitModel(SubmitNodeCollector collector, Model<? super S> model, S state, PoseStack stack, RenderType type, int light, int overlay, int color, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+		collector.submitModel(model, state, stack, type, light, overlay, color, null, 0);
+		if (breakProgress != null) {
+			collector.order(1).submitCrumblingOverlay(model, state, stack, type, light, overlay, color, breakProgress);
 		}
-		return createMergedVertexConsumer(buffer.getBuffer(base), buffer.getBuffer(RenderTypes.armorEntityGlint()));
 	}
 
 	public enum GlintType {
