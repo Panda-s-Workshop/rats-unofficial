@@ -27,7 +27,9 @@ public class CreativeTabClientHelper {
 		if (level != null) {
 			for (Item item : BuiltInRegistries.ITEM.listElements().filter(holder -> holder.is(Tags.Items.ORES)).map(Holder::value).toList()) {
 				ItemStack oreDrop = OreRatNuggetItem.getIngot(level, new ItemStack(item));
-				if (!uniqueOres.contains(oreDrop) && !oreDrop.isEmpty()) {
+				// ItemStack has no equals(): compare item and components, or deepslate ores add the same nugget twice and the tab
+				// build throws ("has already been added to the tab")
+				if (!oreDrop.isEmpty() && uniqueOres.stream().noneMatch(other -> ItemStack.isSameItemSameComponents(other, oreDrop))) {
 					uniqueOres.add(oreDrop);
 				}
 			}
