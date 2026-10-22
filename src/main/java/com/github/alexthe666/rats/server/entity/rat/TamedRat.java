@@ -418,6 +418,9 @@ public class TamedRat extends InventoryRat {
 		// 26.1: ValueOutput stores codec-backed values directly.
 		this.getDepositPos().ifPresent(pos -> tag.store("DepositPos", GlobalPos.CODEC, pos));
 		this.getPickupPos().ifPresent(pos -> tag.store("PickupPos", GlobalPos.CODEC, pos));
+		// zp5: readAdditionalSaveData reads these but upstream never wrote them, so the Cheese Staff faces reset to UP.
+		tag.putInt("DepositFacing", this.depositFacing.ordinal());
+		tag.putInt("PickupFacing", this.pickupFacing.ordinal());
 		tag.putInt("RandomEffectCooldown", this.randomEffectCooldown);
 		if (this.transportingFluid != null && !this.transportingFluid.isEmpty()) {
 			tag.store("TransportingFluid", FluidStack.CODEC, this.transportingFluid);
@@ -449,6 +452,10 @@ public class TamedRat extends InventoryRat {
 		tag.getInt("DepositFacing").ifPresent(facing -> this.depositFacing = Direction.values()[facing]);
 		tag.getInt("PickupFacing").ifPresent(facing -> this.pickupFacing = Direction.values()[facing]);
 		tag.read("TransportingFluid", FluidStack.CODEC).ifPresent(fluid -> this.transportingFluid = fluid);
+		// zp5: LivingEntity reads Health before the upgrades are loaded, so it is clamped to the base max health (the
+		// upgrades' modifiers are transient), and loading the upgrades then runs onUpgradeChanged, which heals to full.
+		// Put the saved health back now that the upgrades are applied; a player changing an upgrade still heals the rat.
+		this.setHealth(tag.getFloatOr("Health", this.getHealth()));
 	}
 
 	@Override

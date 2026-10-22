@@ -69,6 +69,16 @@ Nothing was stubbed out. These are the places where behaviour isn't byte-for-byt
 | `Ratlantis Datapack Enabled by Default` | Inherited from the 1.21.1 community port, whose first commit changed it to `true` (upstream 1.20 ships `false`) | New worlds have Ratlantis on unless the config says otherwise. Left as the base has it; packs that want upstream's behaviour set it to `false` |
 | Dead tags | `minecraft:snow_golem_melts` and `without_patrol_spawns` are now biome attributes; `dead_bush_may_place_on`, `c:tools/bows` and `#c:shears` were renamed | Converted, so the Rats entries take effect again |
 
+## Upstream bugs fixed here
+
+Found by ZP5's rat round-trip GameTest. Both are in upstream AlexModGuy/Rats `1.20` too (checked 2026-10-22: its
+`TamedRat`, `InventoryRat` and `RatContainer` have the same code), so they aren't porting regressions.
+
+| Bug | Cause | Fix |
+|---|---|---|
+| A rat's Cheese Staff deposit and pickup faces reset to UP on every chunk reload | `TamedRat.readAdditionalSaveData` reads `DepositFacing` and `PickupFacing`, but `addAdditionalSaveData` never writes them | They are written, as the ordinals the reader expects |
+| A tamed rat comes back from every chunk reload at full health | `InventoryRat.readAdditionalSaveData` puts the saved upgrades into the `RatContainer`, whose `setItem` runs `onUpgradeChanged()`, which ends in `heal(getMaxHealth())`. The heal also hid a second problem: `LivingEntity` reads `Health` before the upgrades are loaded, and their max-health modifiers are transient (not saved), so the health is clamped to the base max of 8 | `TamedRat.readAdditionalSaveData` puts the saved `Health` back once the upgrades are applied. Upstream's intent is kept: a player changing an upgrade in the rat's inventory still heals it to full |
+
 ## Changes by area
 
 **Client.** `mulPose` became `rotate` (110 sites). Screens go through `Minecraft.gui`, and the HUD through
@@ -118,10 +128,17 @@ The datagen bootstraps were ported so they compile and mirror the JSON. They are
   `NoiseRouterData.SLOPED_CHEESE_AMPLIFIED`, the four-int `Model.renderToBuffer`). It moved the heart fields from `Gui`
   to `Hud` and points `NoiseRouterData.getFunction` at the new package.
 - `neoforge.mods.toml` requires `[26.3,)` for Minecraft, NeoForge and Citadel.
+- A dev-only `gametest` source set (not in the jar) holds GameTests, run with `./gradlew runGameTestServer` in
+  `run/gametest`. Its arena structure is ZP5's `zp5_compat:arena`.
 
 ## Verification (2026-10-21)
 
-- `./gradlew build` passes. There are no GameTests in this mod.
+- `./gradlew build` passes. Upstream Rats has no GameTests.
+- **`./gradlew runGameTestServer` (2026-10-22):** `rats:tamed_rat_save_reload` saves a tamed rat with a health upgrade,
+  13 of 28 health and NORTH/EAST Cheese Staff faces, loads it as a chunk does (`EntityType.loadEntityRecursive`, reason
+  `LOAD`), and checks the faces and health. It then adds an upgrade and checks the rat heals to full. It passes. Against
+  the unfixed `TamedRat` it fails with "deposit facing … was up", and with only the facing fix it fails with "health
+  after reload (max 28.0) to be 13.0: was 28.0".
 - **Dedicated server (`runServer`), Rats and Citadel only, default config (Ratlantis datapack off):**
   - It boots with no errors.
   - Every living Rats entity and mount summons and ticks for 20 seconds without an error: all of rats, Plague, Pied

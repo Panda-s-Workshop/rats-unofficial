@@ -26,6 +26,14 @@ sourceSets.main.java.exclude 'com/github/alexthe666/rats/data/loot/**'
 sourceSets.main.java.exclude 'com/github/alexthe666/rats/data/ratlantis/*.java'
 sourceSets.main.java.exclude 'com/github/alexthe666/rats/data/ratlantis/loot/**'
 
+// zp5: dev-only GameTests, part of the rats mod in the dev runs but not in the jar.
+sourceSets {
+    gametest {
+        compileClasspath += main.output + main.compileClasspath
+        runtimeClasspath += main.output + main.runtimeClasspath
+    }
+}
+
 neoForge {
     version = project.neo_version
 
@@ -52,6 +60,14 @@ neoForge {
             programArgument '--nogui'
         }
 
+        // zp5: boots, runs the GameTests in src/gametest and exits.
+        gameTestServer {
+            type = 'gameTestServer'
+            sourceSet = sourceSets.gametest
+            gameDirectory = project.file('run/gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        }
+
         data {
             data()
             programArguments.addAll(
@@ -66,6 +82,7 @@ neoForge {
     mods {
         "${mod_id}" {
             sourceSet sourceSets.main
+            sourceSet sourceSets.gametest
         }
     }
 }
