@@ -68,6 +68,17 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
+        // zp5: screenshots rats, a zombie and an armor stand in party hats into run/hatshots/screenshots/hats and quits
+        // (gametest/HatShots). It plays a copy of the GameTest world, so run runGameTestServer once first.
+        hatShots {
+            client()
+            sourceSet = sourceSets.gametest
+            gameDirectory = project.file('run/hatshots')
+            programArguments.addAll('--quickPlaySingleplayer', 'hatshots', '--width', '1280', '--height', '800')
+            systemProperty 'rats.hatshots', 'true'
+            systemProperty 'rats.hatshots.tag', project.findProperty('hatShotsTag') ?: ''
+        }
+
         data {
             data()
             programArguments.addAll(
@@ -88,6 +99,13 @@ neoForge {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+def prepareHatShotsWorld = tasks.register('prepareHatShotsWorld', Sync) {
+    from 'run/gametest/gametestserver/gametestworld'
+    into 'run/hatshots/saves/hatshots'
+    exclude 'session.lock'
+}
+tasks.matching { it.name == 'runHatShots' }.configureEach { dependsOn prepareHatShotsWorld }
 
 tasks.named('processResources', ProcessResources).configure {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

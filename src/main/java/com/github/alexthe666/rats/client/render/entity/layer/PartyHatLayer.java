@@ -14,6 +14,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -37,6 +38,10 @@ public class PartyHatLayer<S extends LivingEntityRenderState, M extends EntityMo
 	public PartyHatLayer(RenderLayerParent<S, M> parent, HumanoidModel<?> outerModel) {
 		super(parent);
 		this.outerModel = outerModel;
+		// zp5: the cone is authored 8px above its pivot, which floated it a rat-height over rats and most of a block
+		// over humanoids. The model resets to its initial pose on every draw, so flatten that pose on this layer's own
+		// copy; the brim then sits at the pose stack origin and the transforms below seat it on the head.
+		this.partyHat.head.getChild("hat").setInitialPose(PartPose.ZERO);
 	}
 
 	@Override
@@ -53,7 +58,7 @@ public class PartyHatLayer<S extends LivingEntityRenderState, M extends EntityMo
 			this.outerModel.allParts().forEach(part -> part.visible = false); // 26.1: setAllVisible is gone
 			if (this.getParentModel() instanceof HumanoidModel<?> human) {
 				human.head.translateAndRotate(stack);
-				stack.translate(0.0F, -0.875F, 0.0F);
+				stack.translate(0.0F, -0.5F, 0.0F); // zp5: the top of the 8px head
 			} else if (this.getParentModel() instanceof RatsEntityModelBridge<?> bridge) {
 				// 26.1: rat renderers wrap their Citadel model in the bridge (and swap to PinkieModel for babies); unwrap to reach the parts.
 				boolean positioned = true;
@@ -61,16 +66,17 @@ public class PartyHatLayer<S extends LivingEntityRenderState, M extends EntityMo
 					pinkie.body.translateRotate(stack);
 					stack.translate(0.0D, -0.01D, -0.05D);
 					stack.scale(0.65F, 0.65F, 0.65F);
+					stack.translate(0.0F, -0.08F, 0.0F); // zp5: the top of the 2px body
 				} else if (bridge.citadel() instanceof StaticRatModel<?> rat) {
 					rat.body1.translateRotate(stack);
 					rat.body2.translateRotate(stack);
 					rat.neck.translateRotate(stack);
 					rat.head.translateRotate(stack);
+					stack.translate(0.0F, -1.5F / 16.0F, 0.0F); // zp5: the top of the 3px head
 				} else {
 					positioned = false;
 				}
 				if (positioned) {
-					stack.translate(0.0F, -0.35F, 0.0F);
 					stack.scale(0.75F, 0.75F, 0.75F);
 				}
 			}

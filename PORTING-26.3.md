@@ -71,13 +71,16 @@ Nothing was stubbed out. These are the places where behaviour isn't byte-for-byt
 
 ## Upstream bugs fixed here
 
-Found by ZP5's rat round-trip GameTest. Both are in upstream AlexModGuy/Rats `1.20` too (checked 2026-10-22: its
-`TamedRat`, `InventoryRat` and `RatContainer` have the same code), so they aren't porting regressions.
+The two save bugs were found by ZP5's rat round-trip GameTest. Both are in upstream AlexModGuy/Rats `1.20` too
+(checked 2026-10-22: its `TamedRat`, `InventoryRat` and `RatContainer` have the same code), so they aren't porting
+regressions. The party hat was found in ZP5's Rattlework smoke run (2026-10-23); `PartyHatModel` and `PartyHatLayer`
+place it the same way in the 1.21.1 code this port started from (`e248a90`).
 
 | Bug | Cause | Fix |
 |---|---|---|
 | A rat's Cheese Staff deposit and pickup faces reset to UP on every chunk reload | `TamedRat.readAdditionalSaveData` reads `DepositFacing` and `PickupFacing`, but `addAdditionalSaveData` never writes them | They are written, as the ordinals the reader expects |
 | A tamed rat comes back from every chunk reload at full health | `InventoryRat.readAdditionalSaveData` puts the saved upgrades into the `RatContainer`, whose `setItem` runs `onUpgradeChanged()`, which ends in `heal(getMaxHealth())`. The heal also hid a second problem: `LivingEntity` reads `Health` before the upgrades are loaded, and their max-health modifiers are transient (not saved), so the health is clamped to the base max of 8 | `TamedRat.readAdditionalSaveData` puts the saved `Health` back once the upgrades are applied. Upstream's intent is kept: a player changing an upgrade in the rat's inventory still heals it to full |
+| A party hat floats about a rat-height above a rat's head, and most of a block above a zombie's, player's or armor stand's | `PartyHatModel` puts the cone 8px above its pivot (`PartPose.offset(0, -8, 0)`), and `PartyHatLayer` adds its own lift on top (`-0.35` on rats, `-0.875` on humanoids) | The layer flattens the cone's initial pose on its own baked copy (the model resets to it on every draw, so `setPos` would not stick), then seats the brim on the top of the head: 1.5px above a rat's head pivot, the top of a baby's 2px body, and 8px above a humanoid's. ZP5 Rattlework's housed rat puppets flatten it the same way |
 
 ## Changes by area
 
@@ -129,7 +132,10 @@ The datagen bootstraps were ported so they compile and mirror the JSON. They are
   to `Hud` and points `NoiseRouterData.getFunction` at the new package.
 - `neoforge.mods.toml` requires `[26.3,)` for Minecraft, NeoForge and Citadel.
 - A dev-only `gametest` source set (not in the jar) holds GameTests, run with `./gradlew runGameTestServer` in
-  `run/gametest`. Its arena structure is ZP5's `zp5_compat:arena`.
+  `run/gametest`. Its arena structure is ZP5's `zp5_compat:arena`. The same source set holds `HatShots`:
+  `./gradlew runHatShots` (after one `runGameTestServer`, whose world it copies) opens a dev client, screenshots an
+  adult rat, a baby, a rat in an iron helmet, a zombie and an armor stand in party hats into
+  `run/hatshots/screenshots/hats/` and quits. `-PhatShotsTag=before-` prefixes the file names.
 
 ## Verification (2026-10-21)
 
@@ -139,6 +145,9 @@ The datagen bootstraps were ported so they compile and mirror the JSON. They are
   `LOAD`), and checks the faces and health. It then adds an upgrade and checks the rat heals to full. It passes. Against
   the unfixed `TamedRat` it fails with "deposit facing … was up", and with only the facing fix it fails with "health
   after reload (max 28.0) to be 13.0: was 28.0".
+- **`./gradlew runHatShots` (2026-10-23):** before the party hat fix every hat floats (rats by about a rat-height,
+  the zombie and the armor stand by most of a block); after it the brim sits on the adult's head, on the baby's back,
+  on the zombie's head and where a head would be on the armor stand (just above its neck stick, where helmets go).
 - **Dedicated server (`runServer`), Rats and Citadel only, default config (Ratlantis datapack off):**
   - It boots with no errors.
   - Every living Rats entity and mount summons and ticks for 20 seconds without an error: all of rats, Plague, Pied
