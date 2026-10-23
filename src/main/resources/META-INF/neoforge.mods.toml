@@ -5,7 +5,7 @@ license="GNU LESSER GENERAL PUBLIC LICENSE"
 
 [[mods]]
 modId="rats"
-version="26.3-9.0.0-zp5.2"
+version="26.3-9.0.0-zp5.3"
 displayName="Rats"
 itemIcon="rats:cheese"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/rats"
