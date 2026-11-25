@@ -28,7 +28,7 @@ Most of the code changes in this line were written with AI and checked by people
 
 ## Download
 
-[CurseForge](https://www.curseforge.com/minecraft/mc-mods/rats-unofficial) (NeoForge, Minecraft 26.3).
+[CurseForge](https://www.curseforge.com/minecraft/mc-mods/rats-unofficial-26-3-port) (NeoForge, Minecraft 26.3).
 
 ## Build
 
