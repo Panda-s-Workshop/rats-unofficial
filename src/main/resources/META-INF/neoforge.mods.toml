@@ -1,17 +1,22 @@
 modLoader="javafml"
 loaderVersion="[4,)"
-issueTrackerURL="https://github.com/Alex-the-666/Rats/issues"
+issueTrackerURL="https://github.com/Panda-s-Workshop/rats-unofficial/issues"
 license="GNU LESSER GENERAL PUBLIC LICENSE"
 
 [[mods]]
 modId="rats"
-version="26.3-9.0.0-zp5.3"
-displayName="Rats"
+version="${file.jarVersion}"
+displayName="Rats (Unofficial 26.3 Port)"
 itemIcon="rats:cheese"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/rats"
-logoFile= "rats_logo.png"
+displayURL="https://github.com/Panda-s-Workshop/rats-unofficial"
+iconFile="logo.png"
 authors="AlexThe666, GizmoTheMoonPig"
-description='''What are we going to do today Pinky?'''
+description='''What are we going to do today Pinky?
+
+This is an UNOFFICIAL port of Rats to Minecraft 26.3, made with the help of AI. It is not made, checked or supported by
+the Rats team. It is published with the maintainer's permission, only for Minecraft versions the official mod doesn't
+support. Report problems to the port (Panda-s-Workshop/rats-unofficial), not to the Rats team.
+Rats by AlexThe666 and GizmoTheMoonPig, LGPL-3.0. Includes Citadel (LGPL-3.0), ported to 26.3.'''
 
 # load before us so we can properly replace the milk texture
 [[dependencies.rats]]

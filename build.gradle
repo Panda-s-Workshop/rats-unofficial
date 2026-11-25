@@ -112,6 +112,18 @@ tasks.named('processResources', ProcessResources).configure {
 }
 
 repositories {
+    // Citadel's unofficial 26.3 build (zoom-packers/Citadel-NeoForge, LGPL-3.0), on the zp5-mods maven
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'zp5-mods'
+                url = 'https://raw.githubusercontent.com/zoom-packers/zp5-mods/maven'
+            }
+        }
+        filter {
+            includeModule 'com.github.alexthe666', 'citadelneoforge'
+        }
+    }
     mavenLocal()
     mavenCentral()
     maven {
@@ -122,6 +134,13 @@ repositories {
 
 dependencies {
     implementation "com.github.alexthe666:citadelneoforge:${project.citadel_version}"
+    // Citadel has no public 26.3 build, so this port carries it inside the jar. A newer Citadel in the mods folder wins.
+    jarJar("com.github.alexthe666:citadelneoforge") {
+        version {
+            strictly "[${project.citadel_version},)"
+            prefer project.citadel_version
+        }
+    }
 }
 
 tasks.named('jar', Jar).configure {
